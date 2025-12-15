@@ -14,19 +14,19 @@
 
 namespace Ometra\HelaAlize\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Ometra\HelaAlize\Classes\Soap\ProcessNpcMsgAction;
+use Ometra\HelaAlize\Http\Requests\ProcessNpcMsgRequest;
 
 class SoapController
 {
     /**
      * Handles incoming SOAP messages from NUMLEX.
      *
-     * @param Request $request The HTTP request containing SOAP XML
-     * @return Response Text response with 'éxito' on success
+     * @param  ProcessNpcMsgRequest $request The validated HTTP request containing SOAP XML
+     * @return Response                      Text response with 'éxito' on success
      */
-    public function handle(Request $request): Response
+    public function handle(ProcessNpcMsgRequest $request): Response
     {
         $action = new ProcessNpcMsgAction();
 

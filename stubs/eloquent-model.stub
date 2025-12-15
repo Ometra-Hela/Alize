@@ -1,0 +1,28 @@
+<?php
+/**
+ * PHPStan stubs for Eloquent composite primary keys.
+ *
+ * PHP 8.1+
+ *
+ * @package Ometra\HelaAlize\Stubs
+ * @author  HELA Development Team
+ * @license MIT
+ */
+declare(strict_types=1);
+
+namespace Illuminate\Database\Eloquent;
+
+class Model
+{
+    /**
+     * Returns the primary key name(s) for the model.
+     *
+     * Laravel's runtime signature is intentionally untyped, and some projects
+     * (via traits) support composite primary keys using an array of key names.
+     *
+     * @return string|array<int, string>
+     */
+    public function getKeyName()
+    {
+    }
+}

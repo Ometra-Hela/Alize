@@ -3,8 +3,10 @@
 namespace Ometra\HelaAlize\Tests\Unit\Support;
 
 use Ometra\HelaAlize\Enums\PortabilityState;
+use Ometra\HelaAlize\Exceptions\InvalidTransitionException;
 use Ometra\HelaAlize\Support\StateTransition;
-use PHPUnit\Framework\TestCase;
+use Ometra\HelaAlize\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class StateTransitionTest extends TestCase
 {
@@ -16,7 +18,7 @@ class StateTransitionTest extends TestCase
         $this->validator = new StateTransition();
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_valid_transition_from_initial_to_port_requested()
     {
         $this->assertTrue(
@@ -27,7 +29,7 @@ class StateTransitionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_valid_transition_from_port_requested_to_ready()
     {
         $this->assertTrue(
@@ -38,7 +40,7 @@ class StateTransitionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_rejects_invalid_transition()
     {
         $this->assertFalse(
@@ -49,7 +51,7 @@ class StateTransitionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_rejects_transition_from_terminal_state()
     {
         $this->assertFalse(
@@ -68,7 +70,7 @@ class StateTransitionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_cancellation_from_valid_states()
     {
         $validStates = [
@@ -85,10 +87,10 @@ class StateTransitionTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_exception_on_invalid_transition()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidTransitionException::class);
         $this->expectExceptionMessage('Invalid state transition');
 
         $this->validator->validateOrFail(
@@ -97,7 +99,7 @@ class StateTransitionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_allowed_next_states()
     {
         $allowedStates = $this->validator->getAllowedNextStates(

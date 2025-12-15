@@ -38,8 +38,8 @@ class ReadyToScheduleParser extends MessageParser
 
         return [
             'header' => $this->parseHeader(),
-            'port_id' => $this->getValue("{$basePath}/np:PortID"),
-            'timestamp' => $this->getValue("{$basePath}/np:Timestamp"),
+            'port_id' => $this->getRequiredValue("{$basePath}/np:PortID"),
+            'timestamp' => $this->getRequiredValue("{$basePath}/np:Timestamp"),
             'port_type' => $this->getValue("{$basePath}/np:PortType"),
             'numbers' => $this->parseNumbers($basePath),
         ];

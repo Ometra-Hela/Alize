@@ -14,6 +14,7 @@
 
 namespace Ometra\HelaAlize\Xml\Parsers;
 
+use DOMNode;
 use Ometra\HelaAlize\Enums\MessageType;
 use Ometra\HelaAlize\Xml\MessageParser;
 
@@ -31,7 +32,8 @@ class PortResponseParser extends MessageParser
      *   reason_code: ?string,
      *   reason_text: ?string,
      *   numbers: array,
-     *   rejected_numbers: array
+     *   rejected_numbers: array,
+     *   status: string
      * } Parsed data
      */
     public function parse(string $xml): array
@@ -40,12 +42,12 @@ class PortResponseParser extends MessageParser
 
         $basePath = '//np:NPCMessage/np:PortRespMsg';
 
-        $authorization = $this->getValue("{$basePath}/np:AuthorizationInd");
+        $authorization = $this->getValue("{$basePath}/np:AuthorizationInd") ?? '';
 
         return [
             'header' => $this->parseHeader(),
-            'port_id' => $this->getValue("{$basePath}/np:PortID"),
-            'timestamp' => $this->getValue("{$basePath}/np:Timestamp"),
+            'port_id' => $this->getRequiredValue("{$basePath}/np:PortID"),
+            'timestamp' => $this->getRequiredValue("{$basePath}/np:Timestamp"),
             'authorization' => $authorization,
             'reason_code' => $this->getValue("{$basePath}/np:ReasonCode"),
             'reason_text' => $this->getValue("{$basePath}/np:ReasonText"),
@@ -65,10 +67,23 @@ class PortResponseParser extends MessageParser
     {
         $rejected = [];
         $rejectedNodes = $this->xpath->query("{$basePath}/np:RejectedNumbers/np:RejectedNumber");
+        if ($rejectedNodes === false) {
+            return [];
+        }
 
         foreach ($rejectedNodes as $node) {
-            $number = $this->xpath->query('np:Number', $node)->item(0)?->nodeValue;
-            $reason = $this->xpath->query('np:ReasonCode', $node)->item(0)?->nodeValue;
+            if (!$node instanceof DOMNode) {
+                continue;
+            }
+
+            $numberNodes = $this->xpath->query('np:Number', $node);
+            $reasonNodes = $this->xpath->query('np:ReasonCode', $node);
+
+            $numberNode = $numberNodes !== false ? $numberNodes->item(0) : null;
+            $reasonNode = $reasonNodes !== false ? $reasonNodes->item(0) : null;
+
+            $number = $numberNode instanceof DOMNode ? $numberNode->nodeValue : null;
+            $reason = $reasonNode instanceof DOMNode ? $reasonNode->nodeValue : null;
 
             if ($number) {
                 $rejected[] = [

@@ -14,12 +14,13 @@
 
 namespace Ometra\HelaAlize\Orchestration\Handlers;
 
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\PortabilityState;
 use Ometra\HelaAlize\Models\NpcMessage;
 use Ometra\HelaAlize\Models\Portability;
 use Ometra\HelaAlize\Orchestration\StateOrchestrator;
 
-class ReadyToScheduleHandler
+class ReadyToScheduleHandler implements InboundMessageHandler
 {
     /**
      * Handles ready to schedule notification.
@@ -32,7 +33,7 @@ class ReadyToScheduleHandler
         $portability = Portability::where('port_id', $message->port_id)->first();
 
         if (!$portability) {
-            \Log::error('Portability not found for ready-to-schedule', [
+            Log::error('Portability not found for ready-to-schedule', [
                 'port_id' => $message->port_id,
             ]);
 
@@ -46,7 +47,7 @@ class ReadyToScheduleHandler
             'ABD confirmed ready to schedule',
         );
 
-        \Log::info('Portability ready to schedule', [
+        Log::info('Portability ready to schedule', [
             'port_id' => $portability->port_id,
             't3_expires_at' => $portability->t3_expires_at,
         ]);

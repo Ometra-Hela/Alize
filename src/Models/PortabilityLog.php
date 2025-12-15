@@ -14,6 +14,7 @@ namespace Ometra\HelaAlize\Models;
 
 use Equidna\Toolkit\Traits\Database\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PortabilityLog extends Model
 {
@@ -29,7 +30,7 @@ class PortabilityLog extends Model
 
     protected $guarded = [];
 
-    public function portability()
+    public function portability(): BelongsTo
     {
         return $this->belongsTo(Portability::class, 'id_portability', 'id_portability');
     }

@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Bootstrap file for Portabilities module - initializes Business-Day and Yasumi without ServiceProviders.
+ * Bootstrap hooks for optional business-day integrations.
  *
- * This file is automatically loaded by Composer autoload configuration.
- * Sets up Carbon business day functionality and Mexican holidays using Yasumi.
+ * This file is safe to autoload even when optional third-party packages are not installed.
  * PHP 8.1+
  *
  * @package Ometra\HelaAlize\\Classes
@@ -14,40 +13,50 @@
 
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
-use Cmixin\BusinessDay;
-use Yasumi\Yasumi;
 
-// Initialize Business-Day mixin for Carbon
-BusinessDay::enable(Carbon::class);
-BusinessDay::enable(CarbonImmutable::class);
-
-// Set locale and timezone for Mexico
 Carbon::setLocale('es');
 date_default_timezone_set('America/Mexico_City');
 
-// Try to set holidays region first
-try {
-    Carbon::setHolidaysRegion('mx-national');
-} catch (Exception $e) {
-    // If no mx-national region exists, create holidays using Yasumi
+if (class_exists('Cmixin\\BusinessDay')) {
+    /** @var callable-string $enable */
+    $enable = 'Cmixin\\BusinessDay::enable';
+
+    if (is_callable($enable)) {
+        $enable(Carbon::class);
+        $enable(CarbonImmutable::class);
+    }
+}
+
+if (class_exists('Yasumi\\Yasumi') && method_exists(Carbon::class, 'setHolidays') && method_exists(Carbon::class, 'setHolidaysRegion')) {
     $currentYear = (int) date('Y');
     $years = [$currentYear - 1, $currentYear, $currentYear + 1];
     $holidays = [];
 
     foreach ($years as $year) {
         try {
-            $mexicoHolidays = Yasumi::create('Mexico', $year);
+            /** @var callable-string $create */
+            $create = 'Yasumi\\Yasumi::create';
+            $mexicoHolidays = is_callable($create) ? $create('Mexico', $year) : [];
             foreach ($mexicoHolidays as $holiday) {
                 $holidays[] = $holiday->format('Y-m-d');
             }
-        } catch (Exception $yasumiException) {
-            // If Yasumi fails, continue without holidays for this year
+        } catch (Exception $e) {
             continue;
         }
     }
 
-    if (!empty($holidays)) {
-        Carbon::setHolidays('mx-yasumi', array_unique($holidays));
-        Carbon::setHolidaysRegion('mx-yasumi');
+    if ($holidays !== []) {
+        /** @var callable-string $setHolidays */
+        $setHolidays = 'Carbon\\Carbon::setHolidays';
+        /** @var callable-string $setHolidaysRegion */
+        $setHolidaysRegion = 'Carbon\\Carbon::setHolidaysRegion';
+
+        if (is_callable($setHolidays)) {
+            $setHolidays('mx-yasumi', array_values(array_unique($holidays)));
+        }
+
+        if (is_callable($setHolidaysRegion)) {
+            $setHolidaysRegion('mx-yasumi');
+        }
     }
 }

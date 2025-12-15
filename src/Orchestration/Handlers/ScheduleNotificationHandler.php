@@ -15,12 +15,13 @@
 namespace Ometra\HelaAlize\Orchestration\Handlers;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\PortabilityState;
 use Ometra\HelaAlize\Models\NpcMessage;
 use Ometra\HelaAlize\Models\Portability;
 use Ometra\HelaAlize\Orchestration\StateOrchestrator;
 
-class ScheduleNotificationHandler
+class ScheduleNotificationHandler implements InboundMessageHandler
 {
     /**
      * Handles schedule confirmation from ABD.
@@ -30,10 +31,18 @@ class ScheduleNotificationHandler
      */
     public function handle(NpcMessage $message): void
     {
+        if (!is_string($message->raw_xml) || $message->raw_xml === '') {
+            Log::error('Inbound message XML is missing for schedule handler', [
+                'port_id' => $message->port_id,
+            ]);
+
+            return;
+        }
+
         $portability = Portability::where('port_id', $message->port_id)->first();
 
         if (!$portability) {
-            \Log::error('Portability not found for schedule notification', [
+            Log::error('Portability not found for schedule notification', [
                 'port_id' => $message->port_id,
             ]);
 
@@ -51,10 +60,10 @@ class ScheduleNotificationHandler
         );
 
         // Update execution date
-        $portability->port_exec_date = $execDate;
+        $portability->port_exec_date = $execDate->toMutable();
         $portability->save();
 
-        \Log::info('Portation scheduling confirmed', [
+        Log::info('Portation scheduling confirmed', [
             'port_id' => $portability->port_id,
             'exec_date' => $execDate->toDateTimeString(),
         ]);
@@ -75,11 +84,15 @@ class ScheduleNotificationHandler
         preg_match('/<PortExecDate>(\d{14})<\/PortExecDate>/', $xml, $matches);
 
         if (isset($matches[1])) {
-            return CarbonImmutable::createFromFormat(
+            $dateTime = CarbonImmutable::createFromFormat(
                 'YmdHis',
                 $matches[1],
                 config('alize.timezone'),
             );
+
+            if ($dateTime instanceof CarbonImmutable) {
+                return $dateTime;
+            }
         }
 
         return CarbonImmutable::now(config('alize.timezone'));

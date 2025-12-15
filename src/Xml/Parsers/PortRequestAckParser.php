@@ -40,8 +40,8 @@ class PortRequestAckParser extends MessageParser
 
         return [
             'header' => $this->parseHeader(),
-            'port_id' => $this->getValue("{$basePath}/np:PortID"),
-            'timestamp' => $this->getValue("{$basePath}/np:Timestamp"),
+            'port_id' => $this->getRequiredValue("{$basePath}/np:PortID"),
+            'timestamp' => $this->getRequiredValue("{$basePath}/np:Timestamp"),
             'ack_status' => $this->determineAckStatus($basePath),
             'error_code' => $this->getValue("{$basePath}/np:ErrorCode"),
             'error_message' => $this->getValue("{$basePath}/np:ErrorMessage"),
@@ -59,7 +59,7 @@ class PortRequestAckParser extends MessageParser
         $errorCode = $this->getValue("{$basePath}/np:ErrorCode");
 
         // If no error code or error code is success indicator
-        if (!$errorCode || $errorCode === '0' || $errorCode === '000') {
+        if ($errorCode === null || $errorCode === '' || $errorCode === '0' || $errorCode === '000') {
             return 'SUCCESS';
         }
 

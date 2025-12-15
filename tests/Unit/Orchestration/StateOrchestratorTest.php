@@ -8,7 +8,8 @@ use Ometra\HelaAlize\Enums\PortabilityState;
 use Ometra\HelaAlize\Events\PortabilityStateChanged;
 use Ometra\HelaAlize\Models\Portability;
 use Ometra\HelaAlize\Orchestration\StateOrchestrator;
-use PHPUnit\Framework\TestCase;
+use Ometra\HelaAlize\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class StateOrchestratorTest extends TestCase
 {
@@ -18,13 +19,14 @@ class StateOrchestratorTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
-    public function it_dispatches_event_on_transition()
+    #[Test]
+    public function itDispatchesEventOnTransition()
     {
         Event::fake();
 
         $orchestrator = new StateOrchestrator();
 
+        /** @var Portability $portability */
         $portability = Mockery::mock(Portability::class)->makePartial();
         $portability->port_id = 'PORT123';
         $portability->state = PortabilityState::INITIAL->value;
@@ -42,7 +44,7 @@ class StateOrchestratorTest extends TestCase
 
         Event::assertDispatched(PortabilityStateChanged::class, function ($event) {
             return $event->previousState === PortabilityState::INITIAL &&
-                   $event->newState === PortabilityState::PORT_REQUESTED;
+                $event->newState === PortabilityState::PORT_REQUESTED;
         });
     }
 }

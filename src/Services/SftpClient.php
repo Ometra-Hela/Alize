@@ -2,12 +2,14 @@
 
 namespace Ometra\HelaAlize\Services;
 
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Ometra\HelaAlize\Exceptions\IntegrationException;
 
 class SftpClient
 {
-    protected $disk;
+    protected FilesystemAdapter $disk;
 
     public function __construct()
     {
@@ -54,7 +56,7 @@ class SftpClient
             }
 
             foreach ($files as $file) {
-                if (str_contains($file, $date)) {
+                if (strpos($file, $date) !== false) {
                     $content = $this->disk->get($file);
                     $filename = basename($file);
                     $localPath = $localDir . '/' . $filename;
@@ -66,10 +68,16 @@ class SftpClient
             }
 
             return $downloaded;
-        } catch (\Exception $e) {
-            Log::error("SFTP Download failed: " . $e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error("SFTP Download failed: " . $e->getMessage(), [
+                'exception' => get_class($e),
+                'trace' => $e->getTraceAsString(),
+            ]);
 
-            throw $e;
+            throw new IntegrationException(
+                "Failed to download daily file from SFTP: {$e->getMessage()}",
+                previous: $e
+            );
         }
     }
 }

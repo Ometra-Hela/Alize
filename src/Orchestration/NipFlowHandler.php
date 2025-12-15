@@ -23,7 +23,8 @@ class NipFlowHandler
 {
     public function __construct(
         protected NumlexSoapClient $soapClient
-    ) {}
+    ) {
+    }
 
     /**
      * Request NIP generation (2001).
@@ -40,7 +41,8 @@ class NipFlowHandler
         // Actually portability-details says: 2001 | Solicitud Generación NIP | RIDA/DIDA→ABD
         // ABD forwards to the operator.
         // Assuming we know the DIDA or we are the DIDA/RIDA.
-        // Let's assume passed or config default (though config default DIDA is us if we are DIDA, but if we are RIDA requesting NIP from DIDA... wait).
+        // Let's assume passed or config default (though config default DIDA is us if we are DIDA, but if we are
+        // RIDA requesting NIP from DIDA... wait).
         // RIDA requests NIP?
         // "2001 ... RIDA/DIDA->ABD".
         // Usually RIDA requests it on behalf of user.

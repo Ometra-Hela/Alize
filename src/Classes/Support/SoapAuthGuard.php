@@ -14,7 +14,7 @@
 
 namespace Ometra\HelaAlize\Classes\Support;
 
-use Ometra\HelaAlize\Classes\Exceptions\InvalidSoapCredentialsException;
+use Ometra\HelaAlize\Exceptions\InvalidSoapCredentialsException;
 
 class SoapAuthGuard
 {
@@ -30,10 +30,11 @@ class SoapAuthGuard
         string $userId,
         string $passwordBase64
     ): void {
-        $config = config('alize.soap');
+        /** @var array{user_id?: string, password_b64?: string} $config */
+        $config = (array) config('alize.soap', []);
 
-        $expectedUserId = $config['user_id'];
-        $expectedPassword = $config['password_b64'];
+        $expectedUserId = $config['user_id'] ?? '';
+        $expectedPassword = $config['password_b64'] ?? '';
 
         if ($userId !== $expectedUserId) {
             throw new InvalidSoapCredentialsException('Invalid user ID');

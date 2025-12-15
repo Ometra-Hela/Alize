@@ -21,6 +21,29 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Represents a portability process in the database.
  *
  * @package Ometra\HelaAlize\Models
+ *
+ * @property int $id_portability
+ * @property string|null $port_id
+ * @property string|null $folio_id
+ * @property string|null $state
+ * @property string|null $port_type
+ * @property string|null $subscriber_type
+ * @property string|null $dida
+ * @property string|null $dcr
+ * @property string|null $rida
+ * @property string|null $rcr
+ * @property \Carbon\Carbon|null $req_port_exec_date
+ * @property \Carbon\Carbon|null $port_exec_date
+ * @property \Carbon\Carbon|null $t1_expires_at
+ * @property \Carbon\Carbon|null $t3_expires_at
+ * @property \Carbon\Carbon|null $t4_expires_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder where(string $column, mixed $value)
+ * @method static static|null first()
+ * @method static static create(array $attributes)
+ * @method bool save(array $options = [])
  */
 class Portability extends Model
 {
@@ -29,9 +52,6 @@ class Portability extends Model
      */
     public $timestamps = true;
 
-    /**
-     * @var array<string>
-     */
     protected $fillable = [
         'port_id',
         'folio_id',

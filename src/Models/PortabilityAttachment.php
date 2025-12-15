@@ -14,9 +14,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PortabilityAttachment extends Model
 {
-    /**
-     * @var array<string>
-     */
     protected $fillable = [
         'portability_id',
         'file_name',

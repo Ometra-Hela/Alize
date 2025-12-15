@@ -15,9 +15,11 @@
 namespace Ometra\HelaAlize\Orchestration;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\MessageType;
 use Ometra\HelaAlize\Enums\PortabilityState;
 use Ometra\HelaAlize\Models\Portability;
+use Ometra\HelaAlize\Models\PortabilityNumber;
 use Ometra\HelaAlize\Soap\NumlexSoapClient;
 use Ometra\HelaAlize\Xml\Builders\CancellationRequestBuilder;
 
@@ -25,12 +27,9 @@ class CancellationFlowHandler
 {
     private NumlexSoapClient $soapClient;
 
-    private StateOrchestrator $orchestrator;
-
     public function __construct()
     {
         $this->soapClient = new NumlexSoapClient();
-        $this->orchestrator = new StateOrchestrator();
     }
 
     /**
@@ -45,14 +44,18 @@ class CancellationFlowHandler
         Portability $portability,
         ?string $reason = null,
     ): void {
+        if (!is_string($portability->state) || $portability->state === '') {
+            throw new \InvalidArgumentException('Portability state is missing.');
+        }
+
         $state = PortabilityState::from($portability->state);
 
         // Validate state allows cancellation
         if (!$state->canCancel()) {
             throw new \Exception(
                 "Cannot cancel in state: {$state->value}. " .
-                "Cancellation only allowed in PORT_REQUESTED, PORT_INDVAL_REQUESTED, " .
-                "READY_TO_BE_SCHEDULED, or PORT_SCHEDULED.",
+                    "Cancellation only allowed in PORT_REQUESTED, PORT_INDVAL_REQUESTED, " .
+                    "READY_TO_BE_SCHEDULED, or PORT_SCHEDULED.",
             );
         }
 
@@ -62,17 +65,24 @@ class CancellationFlowHandler
         }
 
         // Build cancellation message
+        $ida = (string) config('alize.ida');
+        if ($ida === '') {
+            throw new \InvalidArgumentException('Missing sender IDA configuration (alize.ida).');
+        }
+
+        $portId = $this->requireString($portability->port_id, 'port_id');
+
         $builder = new CancellationRequestBuilder();
         $xml = $builder->build([
-            'sender' => config('alize.ida'),
-            'port_id' => $portability->port_id,
-            'port_type' => $portability->port_type,
-            'subscriber_type' => $portability->subscriber_type,
+            'sender' => $ida,
+            'port_id' => $portId,
+            'port_type' => $this->requireString($portability->port_type, 'port_type'),
+            'subscriber_type' => $this->requireString($portability->subscriber_type, 'subscriber_type'),
             'recovery_flag' => 'NO',
-            'dida' => $portability->dida,
-            'dcr' => $portability->dcr,
-            'rida' => $portability->rida,
-            'rcr' => $portability->rcr,
+            'dida' => $this->requireString($portability->dida, 'dida'),
+            'dcr' => $this->requireString($portability->dcr, 'dcr'),
+            'rida' => $this->requireString($portability->rida, 'rida'),
+            'rcr' => $this->requireString($portability->rcr, 'rcr'),
             'numbers' => $this->getPortabilityNumbers($portability),
             'comments' => $reason ?? 'Client requested cancellation',
         ]);
@@ -81,14 +91,14 @@ class CancellationFlowHandler
         $result = $this->soapClient->sendWithRetry(
             $xml,
             MessageType::CANCELLATION_REQUEST,
-            $portability->port_id,
+            $portId,
         );
 
         if (!$result['success']) {
             throw new \Exception("Failed to send cancellation: {$result['error']}");
         }
 
-        \Log::info('Cancellation requested', [
+        Log::info('Cancellation requested', [
             'port_id' => $portability->port_id,
             'reason' => $reason,
         ]);
@@ -120,11 +130,40 @@ class CancellationFlowHandler
      */
     private function getPortabilityNumbers(Portability $portability): array
     {
-        return $portability->msisdn->map(function ($msisdn) {
-            return [
-                'start' => $msisdn->msisdn_ported,
-                'end' => $msisdn->msisdn_ported,
+        $numbers = [];
+
+        foreach ($portability->numbers()->get() as $number) {
+            if (!$number instanceof PortabilityNumber) {
+                continue;
+            }
+
+            $msisdn = $number->msisdn_ported;
+            if (!is_string($msisdn) || $msisdn === '') {
+                continue;
+            }
+
+            $numbers[] = [
+                'start' => $msisdn,
+                'end' => $msisdn,
             ];
-        })->toArray();
+        }
+
+        return $numbers;
+    }
+
+    /**
+     * Requires a non-empty string value.
+     *
+     * @param  string|null $value Value to validate
+     * @param  string      $name  Field name
+     * @return string
+     */
+    private function requireString(?string $value, string $name): string
+    {
+        if ($value === null || $value === '') {
+            throw new \InvalidArgumentException("Missing required portability field: {$name}.");
+        }
+
+        return $value;
     }
 }

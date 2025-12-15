@@ -2,7 +2,6 @@
 
 namespace Ometra\HelaAlize\Console\Commands;
 
-use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Ometra\HelaAlize\Facades\HelaAlize;
 
@@ -33,14 +32,14 @@ class TestInitiatePortability extends Command
     /**
      * Execute the console command.
      *
-     * @return int|void
+     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->alert("NUMLEX Portability Test Tool");
 
         if (!$this->confirm('This will attempt to start a REAL portability (1001) flow. Continue?', false)) {
-            return;
+            return self::SUCCESS;
         }
 
         $dida = $this->ask('DIDA (Donating Carrier)', '001'); // 001 = Telcel dummy
@@ -49,7 +48,7 @@ class TestInitiatePortability extends Command
         if (strlen($dn) !== 10) {
             $this->error("Invalid number length.");
 
-            return 1;
+            return self::FAILURE;
         }
 
         $this->info("Initiating request for $dn from DIDA $dida...");
@@ -74,16 +73,19 @@ class TestInitiatePortability extends Command
                     ['Port ID', $portability->port_id],
                     ['Folio ID', $portability->folio_id],
                     ['State', $portability->state],
-                    ['Exec Date', $portability->req_port_exec_date->toDateString()],
+                    ['Exec Date', $portability->req_port_exec_date?->toDateString() ?? '-'],
                 ]
             );
 
-            $this->info("✅ Portability Initiated Successfully!");
+            $this->info('Portability initiated successfully.');
 
+            return self::SUCCESS;
         } catch (\Exception $e) {
-            $this->error("❌ Initiation Failed: " . $e->getMessage());
+            $this->error("Initiation failed: " . $e->getMessage());
             $this->line("Stack trace:");
             $this->line($e->getTraceAsString());
+
+            return self::FAILURE;
         }
     }
 }

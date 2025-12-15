@@ -1,12 +1,15 @@
 includes:
-  - phpstan-baseline.neon
+  - vendor/larastan/larastan/extension.neon
+
 
 parameters:
   level: 8
+  treatPhpDocTypesAsCertain: false
   paths:
     - src
-  scanDirectories:
-    - vendor/illuminate
-    - vendor/equidna
-  excludePaths:
-    - vendor
+  ignoreErrors:
+    -
+      identifier: missingType.iterableValue
+    -
+      identifier: missingType.generics
+

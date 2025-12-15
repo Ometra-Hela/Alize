@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="Ometra Hela Alize">
+    <description>PHPCS rules for the Ometra/HelaAlize package.</description>
+
+    <arg name="basepath" value="."/>
+    <arg name="extensions" value="php"/>
+
+    <file>src</file>
+    <file>config</file>
+    <file>routes</file>
+    <file>database/migrations</file>
+    <file>tests</file>
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+
+    <rule ref="PSR12"/>
+
+    <!-- Allow snake_case test method names (PHPUnit convention) -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+
+    <!-- Relax line length to 250 chars (project standard) -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="250"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+</ruleset>

@@ -89,11 +89,17 @@ class FolioIdGenerator
         $fullYear = '20' . $year;
         $timestampStr = $fullYear . $monthDayHourMin;
 
-        return CarbonImmutable::createFromFormat(
+        $dateTime = CarbonImmutable::createFromFormat(
             'YmdHi',
             $timestampStr,
             config('alize.timezone'),
         );
+
+        if (!$dateTime instanceof CarbonImmutable) {
+            throw new \InvalidArgumentException('Invalid FolioID timestamp.');
+        }
+
+        return $dateTime;
     }
 
     /**

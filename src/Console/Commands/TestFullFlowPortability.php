@@ -63,7 +63,7 @@ class TestFullFlowPortability extends Command
         return 0;
     }
 
-    private function testNip()
+    private function testNip(): void
     {
         $dn = $this->ask('Number to request NIP for (10 digits)');
         $dida = $this->ask('DIDA (Donor Carrier ID)', '001');
@@ -74,7 +74,7 @@ class TestFullFlowPortability extends Command
         $this->info("Result: " . json_encode($result));
     }
 
-    private function testCancellation()
+    private function testCancellation(): void
     {
         $portId = $this->ask('Port ID to cancel');
         $reason = $this->ask('Cancellation Reason', 'User Request');
@@ -91,7 +91,7 @@ class TestFullFlowPortability extends Command
         $this->info("Cancellation Requested.");
     }
 
-    private function testReversion()
+    private function testReversion(): void
     {
         $portId = $this->ask('Port ID to reverse');
         $reason = $this->ask('Reversion Reason', 'Error in process');
@@ -108,7 +108,7 @@ class TestFullFlowPortability extends Command
         $this->info("Result: " . json_encode($result));
     }
 
-    private function testInbound()
+    private function testInbound(): void
     {
         $this->info("Simulating inbound SOAP message processing...");
         $xml = $this->ask("Paste XML Content (or leave empty for a mock 2002)");

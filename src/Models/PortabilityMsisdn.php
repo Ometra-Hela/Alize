@@ -14,6 +14,7 @@ namespace Ometra\HelaAlize\Models;
 
 use Equidna\Toolkit\Traits\Database\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PortabilityMsisdn extends Model
 {
@@ -21,21 +22,19 @@ class PortabilityMsisdn extends Model
 
     protected $table          = 'PortabilitiesMsisdn';
 
-    protected $primaryKey     = ['id_portability', 'msisdn_ported'];
-
     public $timestamps     = false;
 
     public $incrementing   = false;
 
     protected $guarded = [];
 
-    public function portability()
+    public function portability(): BelongsTo
     {
-        return $this->belongsTo('Ometra\HelaAlize\Models\Portability', 'id_portability', 'id_portability');
+        return $this->belongsTo(Portability::class, 'id_portability', 'id_portability');
     }
 
-    public function service()
+    public function service(): BelongsTo
     {
-        return $this->belongsTo('Ometra\HelaAlize\Models\Service', 'msisdn_transitory', 'msisdn');
+        return $this->belongsTo(Service::class, 'msisdn_transitory', 'msisdn');
     }
 }

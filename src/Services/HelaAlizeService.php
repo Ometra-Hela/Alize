@@ -34,16 +34,32 @@ class HelaAlizeService
         protected NipFlowHandler $nipHandler,
         protected ReversionFlowHandler $reversionHandler,
         protected StateOrchestrator $orchestrator
-    ) {}
+    ) {
+    }
 
     /**
      * Initiates a new portability request (1001).
      *
-     * @param array $data Portability data (dida, rida, pin, numbers, etc)
+     * @param array{
+     *   port_type: string,
+     *   subscriber_type: string,
+     *   recovery_flag?: string,
+     *   dida: string,
+     *   dcr: string,
+     *   rcr: string,
+     *   numbers: array<array{start: string, end: string}>,
+     *   pin?: string,
+     *   subs_req_time: string,
+     *   comments?: string
+     * } $data Portability data
      * @return Portability
      */
     public function initiate(array $data): Portability
     {
+        if (!array_key_exists('recovery_flag', $data)) {
+            $data['recovery_flag'] = 'NO';
+        }
+
         return $this->flowHandler->initiatePortation($data);
     }
 
@@ -105,6 +121,10 @@ class HelaAlizeService
         $portability = Portability::where('port_id', $portId)->first();
 
         if (!$portability) {
+            return null;
+        }
+
+        if (!is_string($portability->state) || $portability->state === '') {
             return null;
         }
 

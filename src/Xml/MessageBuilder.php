@@ -193,6 +193,12 @@ abstract class MessageBuilder
      */
     protected function toXml(): string
     {
-        return $this->doc->saveXML();
+        $xml = $this->doc->saveXML();
+
+        if ($xml === false) {
+            throw new \RuntimeException('Unable to serialize XML document.');
+        }
+
+        return $xml;
     }
 }

@@ -15,7 +15,9 @@
 namespace Ometra\HelaAlize\Orchestration;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\PortabilityState;
+use Ometra\HelaAlize\Exceptions\InvalidTransitionException;
 use Ometra\HelaAlize\Models\Portability;
 use Ometra\HelaAlize\Support\StateTransition;
 
@@ -35,13 +37,17 @@ class StateOrchestrator
      * @param  PortabilityState $newState New state
      * @param  string|null      $reason Transition reason
      * @return void
-     * @throws \InvalidArgumentException
+     * @throws InvalidTransitionException When transition is not allowed
      */
     public function transition(
         Portability $portability,
         PortabilityState $newState,
         ?string $reason = null,
     ): void {
+        if (!is_string($portability->state) || $portability->state === '') {
+            throw new InvalidTransitionException('Portability state is missing.');
+        }
+
         $currentState = PortabilityState::from($portability->state);
 
         // Validate transition
@@ -63,7 +69,7 @@ class StateOrchestrator
         $this->updateTimers($portability, $newState);
 
         // Log transition
-        \Log::info('State transition', [
+        Log::info('State transition', [
             'port_id' => $portability->port_id,
             'from' => $previousState->value,
             'to' => $newState->value,
@@ -85,8 +91,12 @@ class StateOrchestrator
         $now = CarbonImmutable::now(config('alize.timezone'));
 
         match ($state) {
-            PortabilityState::PORT_REQUESTED => $portability->t1_expires_at = $now->addMinutes(20),
-            PortabilityState::READY_TO_BE_SCHEDULED => $portability->t3_expires_at = $now->addHours(24),
+            PortabilityState::PORT_REQUESTED => $portability->t1_expires_at = $now->addMinutes(
+                config('alize.timers.t1_timeout_minutes', 20)
+            )->toMutable(),
+            PortabilityState::READY_TO_BE_SCHEDULED => $portability->t3_expires_at = $now->addHours(
+                config('alize.timers.t3_timeout_hours', 24)
+            )->toMutable(),
             PortabilityState::PORT_SCHEDULED => $portability->t4_expires_at = $portability->port_exec_date,
             default => null,
         };
@@ -124,7 +134,7 @@ class StateOrchestrator
         Portability $portability,
         string $timer,
     ): void {
-        \Log::warning('Timer expired', [
+        Log::warning('Timer expired', [
             'port_id' => $portability->port_id,
             'timer' => $timer,
             'state' => $portability->state,

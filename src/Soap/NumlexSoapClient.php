@@ -15,8 +15,9 @@
 namespace Ometra\HelaAlize\Soap;
 
 use Ometra\HelaAlize\Enums\MessageType;
-use Ometra\HelaAlize\Exceptions\NumlexSoapException;
+use Ometra\HelaAlize\Exceptions\IntegrationException;
 use Ometra\HelaAlize\Models\NpcMessage;
+use Ometra\HelaAlize\Support\CircuitBreaker;
 use SoapClient;
 use SoapFault;
 
@@ -28,6 +29,10 @@ class NumlexSoapClient
 
     private string $passwordBase64;
 
+    private CircuitBreaker $circuitBreaker;
+
+    private int $retryDelayMs = 1000;
+
     /**
      * Constructor.
      *
@@ -37,21 +42,57 @@ class NumlexSoapClient
     {
         $config = config('alize.soap');
 
-        $this->userId = $config['user_id'];
-        $this->passwordBase64 = $config['password_b64'];
+        if (!is_array($config)) {
+            throw new IntegrationException('Invalid SOAP configuration (alize.soap).');
+        }
 
-        $this->client = new SoapClient(null, [
-            'location' => $config['client_endpoint'],
+        $tls = $config['tls'] ?? null;
+        if (!is_array($tls)) {
+            throw new IntegrationException('Invalid SOAP TLS configuration (alize.soap.tls).');
+        }
+
+        $this->userId = (string) ($config['user_id'] ?? '');
+        $this->passwordBase64 = (string) ($config['password_b64'] ?? '');
+
+        if ($this->userId === '' || $this->passwordBase64 === '') {
+            throw new IntegrationException('Missing SOAP credentials (alize.soap.user_id / alize.soap.password_b64).');
+        }
+
+        $endpoint = (string) ($config['client_endpoint'] ?? '');
+        $this->retryDelayMs = (int) ($config['retry_delay_ms'] ?? 1000);
+
+        // Initialize circuit breaker
+        $cb = (array) ($config['circuit_breaker'] ?? []);
+        $this->circuitBreaker = new CircuitBreaker(
+            name: 'soap_' . md5($endpoint),
+            failureThreshold: (int) ($cb['failure_threshold'] ?? 5),
+            openSeconds: (int) ($cb['open_seconds'] ?? 60),
+            halfOpenMaxSuccesses: (int) ($cb['half_open_successes'] ?? 1),
+        );
+
+        $this->client = $this->makeSoapClient([
+            'location' => $endpoint,
             'uri' => 'urn:npc:mx:np',
             'trace' => true,
             'exceptions' => true,
-            'connection_timeout' => $config['timeout'],
-            'local_cert' => $config['tls']['cert_path'],
-            'local_pk' => $config['tls']['key_path'],
-            'cafile' => $config['tls']['ca_path'],
+            'connection_timeout' => (int) ($config['timeout'] ?? 30),
+            'local_cert' => (string) ($tls['cert_path'] ?? ''),
+            'local_pk' => (string) ($tls['key_path'] ?? ''),
+            'cafile' => (string) ($tls['ca_path'] ?? ''),
             'verify_peer' => true,
             'verify_peer_name' => true,
         ]);
+    }
+
+    /**
+     * SoapClient factory for testability.
+     *
+     * @param  array<string, mixed> $options SoapClient options
+     * @return SoapClient
+     */
+    protected function makeSoapClient(array $options): SoapClient
+    {
+        return new SoapClient(null, $options);
     }
 
     /**
@@ -67,6 +108,14 @@ class NumlexSoapClient
         MessageType $messageType,
         string $portId,
     ): array {
+        if (! $this->circuitBreaker->allowRequest()) {
+            return [
+                'success' => false,
+                'response' => '',
+                'error' => 'Circuit breaker open: skipping SOAP call',
+            ];
+        }
+
         try {
             // Validate XML against XSD schema
             $validator = new \Ometra\HelaAlize\Xml\XsdValidator();
@@ -79,6 +128,8 @@ class NumlexSoapClient
                 'xmlMsg' => $xmlMessage,
             ]);
 
+            $responseText = is_scalar($response) ? (string) $response : (string) json_encode($response);
+
             // Store successful message
             NpcMessage::create([
                 'port_id' => $portId,
@@ -89,16 +140,19 @@ class NumlexSoapClient
                 'raw_xml' => $xmlMessage,
                 'sent_at' => now(),
                 'ack_status' => 'SUCCESS',
-                'ack_text' => $response,
+                'ack_text' => $responseText,
                 'idempotency_key' => $this->generateIdempotencyKey($portId, $messageType, $xmlMessage),
             ]);
 
+            $this->circuitBreaker->recordSuccess();
+
             return [
                 'success' => true,
-                'response' => $response,
+                'response' => $responseText,
                 'error' => null,
             ];
         } catch (SoapFault $e) {
+            $this->circuitBreaker->recordFailure();
             // Store failed message
             NpcMessage::create([
                 'port_id' => $portId,
@@ -116,7 +170,7 @@ class NumlexSoapClient
 
             return [
                 'success' => false,
-                'response' => null,
+                'response' => '',
                 'error' => $e->getMessage(),
             ];
         }
@@ -138,6 +192,11 @@ class NumlexSoapClient
         int $maxRetries = 3,
     ): array {
         $attempt = 0;
+        $result = [
+            'success' => false,
+            'response' => '',
+            'error' => 'No attempts were performed.',
+        ];
 
         while ($attempt < $maxRetries) {
             $result = $this->processNPCMsg($xmlMessage, $messageType, $portId);
@@ -149,8 +208,9 @@ class NumlexSoapClient
             $attempt++;
 
             if ($attempt < $maxRetries) {
-                // Exponential backoff: 1s, 2s, 4s
-                sleep(2 ** ($attempt - 1));
+                // Exponential backoff using configured base delay
+                $delayMs = $this->retryDelayMs * (2 ** ($attempt - 1));
+                usleep($delayMs * 1000);
             }
         }
 

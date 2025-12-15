@@ -95,7 +95,7 @@ class StateTransition
         $allowedValues = self::TRANSITIONS[$currentState->value] ?? [];
 
         return array_map(
-            fn ($value) => PortabilityState::from($value),
+            fn($value) => PortabilityState::from($value),
             $allowedValues,
         );
     }
@@ -106,7 +106,7 @@ class StateTransition
      * @param  PortabilityState        $from Current state
      * @param  PortabilityState        $to   Target state
      * @return void
-     * @throws \InvalidArgumentException When transition is not allowed
+     * @throws InvalidTransitionException When transition is not allowed
      */
     public function validateOrFail(
         PortabilityState $from,

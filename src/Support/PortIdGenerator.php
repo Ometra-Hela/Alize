@@ -80,11 +80,17 @@ class PortIdGenerator
     {
         $timestampStr = substr($portId, 3, 14);
 
-        return CarbonImmutable::createFromFormat(
+        $dateTime = CarbonImmutable::createFromFormat(
             'YmdHis',
             $timestampStr,
             config('alize.timezone'),
         );
+
+        if (!$dateTime instanceof CarbonImmutable) {
+            throw new \InvalidArgumentException('Invalid PortID timestamp.');
+        }
+
+        return $dateTime;
     }
 
     /**

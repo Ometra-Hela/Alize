@@ -15,10 +15,14 @@
 namespace Ometra\HelaAlize\Orchestration;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Classes\Calendar\BusinessCalendarMX;
 use Ometra\HelaAlize\Enums\MessageType;
 use Ometra\HelaAlize\Enums\PortabilityState;
+use Ometra\HelaAlize\Exceptions\IntegrationException;
 use Ometra\HelaAlize\Models\Portability;
+use Ometra\HelaAlize\Models\PortabilityNumber;
 use Ometra\HelaAlize\Soap\NumlexSoapClient;
 use Ometra\HelaAlize\Support\FolioIdGenerator;
 use Ometra\HelaAlize\Support\PortIdGenerator;
@@ -29,8 +33,6 @@ class PortationFlowHandler
 {
     private NumlexSoapClient $soapClient;
 
-    private StateOrchestrator $orchestrator;
-
     private PortIdGenerator $portIdGenerator;
 
     private FolioIdGenerator $folioIdGenerator;
@@ -40,7 +42,6 @@ class PortationFlowHandler
     public function __construct()
     {
         $this->soapClient = new NumlexSoapClient();
-        $this->orchestrator = new StateOrchestrator();
         $this->portIdGenerator = new PortIdGenerator();
         $this->folioIdGenerator = new FolioIdGenerator();
         $this->calendar = new BusinessCalendarMX();
@@ -62,90 +63,92 @@ class PortationFlowHandler
      *   comments?: string
      * } $data Portability data
      * @return Portability Created portability
+     * @throws IntegrationException When SOAP request fails
      */
     public function initiatePortation(array $data): Portability
     {
-        $ida = config('alize.ida');
-        $portId = $this->portIdGenerator->generate($ida);
-        $folioId = $this->folioIdGenerator->generate($ida);
-
-        // Calculate requested execution date (next business day + 1)
-        $now = CarbonImmutable::now(config('alize.timezone'));
-        $reqExecDate = $this->calendar->addBusinessDays(
-            $this->calendar->clampToWorkingWindow($now),
-            2,
-        );
-
-        // Build port request XML
-        $builder = new PortRequestBuilder();
-        $xml = $builder->build([
-            'sender' => $ida,
-            'port_id' => $portId,
-            'folio_id' => $folioId,
-            'port_type' => $data['port_type'],
-            'subscriber_type' => $data['subscriber_type'],
-            'recovery_flag' => $data['recovery_flag'] ?? 'NO',
-            'dida' => $data['dida'],
-            'dcr' => $data['dcr'],
-            'rida' => $ida,
-            'rcr' => $data['rcr'],
-            'numbers' => $data['numbers'],
-            'pin' => $data['pin'] ?? null,
-            'req_port_exec_date' => $reqExecDate->format('YmdHis'),
-            'subs_req_time' => $data['subs_req_time'],
-            'comments' => $data['comments'] ?? null,
-        ]);
-
-        // Create portability record
-        $portability = Portability::create([
-            'port_id' => $portId,
-            'folio_id' => $folioId,
-            'state' => PortabilityState::INITIAL->value,
-            'port_type' => $data['port_type'],
-            'subscriber_type' => $data['subscriber_type'],
-            'dida' => $data['dida'],
-            'dcr' => $data['dcr'],
-            'rida' => $ida,
-            'rcr' => $data['rcr'],
-            'req_port_exec_date' => $reqExecDate,
-            'created_at' => $now,
-        ]);
-
-        // Persist numbers
-        foreach ($data['numbers'] as $range) {
-            // Expand range if needed or strict list?
-            // ABD allows ranges, but typically we might want to store individual numbers or ranges.
-            // For now, let's assume we store individual numbers if the range is small,
-            // OR we need to adjust PortabilityNumber to store ranges.
-            // Looking at getPortabilityNumbers implementation, it mapped 'msisdn_ported' to start/end = same.
-            // This implies the DB stores individual numbers.
-
-            // Loop through range
-            for ($i = (int)$range['start']; $i <= (int)$range['end']; $i++) {
-                \Ometra\HelaAlize\Models\PortabilityNumber::create([
-                    'portability_id' => $portability->id_portability,
-                    'msisdn_ported' => (string)$i
-                ]);
+        return DB::transaction(function () use ($data) {
+            $ida = (string) config('alize.ida');
+            if ($ida === '') {
+                throw new IntegrationException('Missing sender IDA configuration (alize.ida).');
             }
-        }
 
-        // Send SOAP message
-        $result = $this->soapClient->sendWithRetry(
-            $xml,
-            MessageType::PORT_REQUEST,
-            $portId,
-        );
+            $portId = $this->portIdGenerator->generate($ida);
+            $folioId = $this->folioIdGenerator->generate($ida);
 
-        if (!$result['success']) {
-            throw new \Exception("Failed to send port request: {$result['error']}");
-        }
+            // Calculate requested execution date (next business day + 1)
+            $now = CarbonImmutable::now(config('alize.timezone'));
+            $reqExecDate = $this->calendar->addBusinessDays(
+                $this->calendar->clampToWorkingWindow($now),
+                2,
+            );
 
-        \Log::info('Portation initiated', [
-            'port_id' => $portId,
-            'folio_id' => $folioId,
-        ]);
+            // Build port request XML
+            $builder = new PortRequestBuilder();
+            $payload = [
+                'sender' => $ida,
+                'port_id' => $portId,
+                'folio_id' => $folioId,
+                'port_type' => $data['port_type'],
+                'subscriber_type' => $data['subscriber_type'],
+                'recovery_flag' => $data['recovery_flag'] ?? 'NO',
+                'dida' => $data['dida'],
+                'dcr' => $data['dcr'],
+                'rida' => $ida,
+                'rcr' => $data['rcr'],
+                'numbers' => $data['numbers'],
+                'req_port_exec_date' => $reqExecDate->format('YmdHis'),
+                'subs_req_time' => $data['subs_req_time'],
+            ];
 
-        return $portability;
+            if (isset($data['pin']) && is_string($data['pin']) && $data['pin'] !== '') {
+                $payload['pin'] = $data['pin'];
+            }
+
+            if (isset($data['comments']) && is_string($data['comments']) && $data['comments'] !== '') {
+                $payload['comments'] = $data['comments'];
+            }
+
+            $xml = $builder->build($payload);
+
+            // Create portability record
+            $portability = Portability::create([
+                'port_id' => $portId,
+                'folio_id' => $folioId,
+                'state' => PortabilityState::INITIAL->value,
+                'port_type' => $data['port_type'],
+                'subscriber_type' => $data['subscriber_type'],
+                'dida' => $data['dida'],
+                'dcr' => $data['dcr'],
+                'rida' => $ida,
+                'rcr' => $data['rcr'],
+                'req_port_exec_date' => $reqExecDate,
+                'created_at' => $now,
+            ]);
+
+            // Persist numbers with batch inserts (performance optimization)
+            $this->batchInsertNumbers($portability, $data['numbers']);
+
+            // Send SOAP message
+            $result = $this->soapClient->sendWithRetry(
+                $xml,
+                MessageType::PORT_REQUEST,
+                $portId,
+            );
+
+            if (!$result['success']) {
+                throw new IntegrationException(
+                    "Failed to send port request: {$result['error']}"
+                );
+            }
+
+            Log::info('Portation initiated', [
+                'port_id' => $portId,
+                'folio_id' => $folioId,
+            ]);
+
+            return $portability;
+        });
     }
 
     /**
@@ -161,6 +164,10 @@ class PortationFlowHandler
         ?CarbonImmutable $execDate = null,
     ): void {
         // Verify state allows scheduling
+        if (!is_string($portability->state) || $portability->state === '') {
+            throw new \InvalidArgumentException('Portability state is missing.');
+        }
+
         $state = PortabilityState::from($portability->state);
         if ($state !== PortabilityState::READY_TO_BE_SCHEDULED) {
             throw new \Exception("Cannot schedule in state: {$state->value}");
@@ -171,18 +178,29 @@ class PortationFlowHandler
             $execDate = $this->calculateExecutionDate();
         }
 
+        $ida = (string) config('alize.ida');
+        if ($ida === '') {
+            throw new \InvalidArgumentException('Missing sender IDA configuration (alize.ida).');
+        }
+
+        $portId = $this->requireString($portability->port_id, 'port_id');
+
+        if (!$portability->req_port_exec_date instanceof \Carbon\Carbon) {
+            throw new \InvalidArgumentException('Portability req_port_exec_date is missing.');
+        }
+
         // Build schedule message
         $builder = new SchedulePortBuilder();
         $xml = $builder->build([
-            'sender' => config('alize.ida'),
-            'port_id' => $portability->port_id,
-            'port_type' => $portability->port_type,
-            'subscriber_type' => $portability->subscriber_type,
+            'sender' => $ida,
+            'port_id' => $portId,
+            'port_type' => $this->requireString($portability->port_type, 'port_type'),
+            'subscriber_type' => $this->requireString($portability->subscriber_type, 'subscriber_type'),
             'recovery_flag' => 'NO',
-            'dida' => $portability->dida,
-            'dcr' => $portability->dcr,
-            'rida' => $portability->rida,
-            'rcr' => $portability->rcr,
+            'dida' => $this->requireString($portability->dida, 'dida'),
+            'dcr' => $this->requireString($portability->dcr, 'dcr'),
+            'rida' => $this->requireString($portability->rida, 'rida'),
+            'rcr' => $this->requireString($portability->rcr, 'rcr'),
             'numbers' => $this->getPortabilityNumbers($portability),
             'port_exec_date' => $execDate->format('YmdHis'),
             'req_port_exec_date' => $portability->req_port_exec_date->format('YmdHis'),
@@ -192,7 +210,7 @@ class PortationFlowHandler
         $result = $this->soapClient->sendWithRetry(
             $xml,
             MessageType::SCHEDULE_PORT_REQUEST,
-            $portability->port_id,
+            $portId,
         );
 
         if (!$result['success']) {
@@ -200,13 +218,62 @@ class PortationFlowHandler
         }
 
         // Update portability
-        $portability->port_exec_date = $execDate;
+        $portability->port_exec_date = $execDate->toMutable();
         $portability->save();
 
-        \Log::info('Portation scheduled', [
+        Log::info('Portation scheduled', [
             'port_id' => $portability->port_id,
             'exec_date' => $execDate->toDateTimeString(),
         ]);
+    }
+
+    /**
+     * Batch inserts portability numbers with performance optimization.
+     *
+     * Prevents memory issues with large number ranges by batching inserts.
+     *
+     * @param  Portability                              $portability Portability instance
+     * @param  array<array{start: string, end: string}> $ranges      Number ranges
+     * @return void
+     */
+    private function batchInsertNumbers(Portability $portability, array $ranges): void
+    {
+        $batchSize = 1000;
+        $numbers = [];
+
+        foreach ($ranges as $range) {
+            $start = (int)$range['start'];
+            $end = (int)$range['end'];
+            $rangeSize = $end - $start + 1;
+
+            // Warn about very large ranges
+            if ($rangeSize > 10000) {
+                Log::warning('Large number range detected', [
+                    'range_size' => $rangeSize,
+                    'start' => $start,
+                    'end' => $end,
+                    'port_id' => $portability->port_id,
+                ]);
+            }
+
+            for ($i = $start; $i <= $end; $i++) {
+                $numbers[] = [
+                    'portability_id' => $portability->id_portability,
+                    'msisdn_ported' => (string)$i,
+                ];
+
+                // Batch insert every N records
+                if (count($numbers) >= $batchSize) {
+                    PortabilityNumber::insert($numbers);
+                    $numbers = [];
+                }
+            }
+        }
+
+        // Insert remaining numbers
+        if (!empty($numbers)) {
+            PortabilityNumber::insert($numbers);
+        }
     }
 
     /**
@@ -234,11 +301,40 @@ class PortationFlowHandler
      */
     private function getPortabilityNumbers(Portability $portability): array
     {
-        return $portability->numbers->map(function ($number) {
-            return [
-                'start' => $number->msisdn_ported,
-                'end' => $number->msisdn_ported,
+        $numbers = [];
+
+        foreach ($portability->numbers()->get() as $number) {
+            if (!$number instanceof PortabilityNumber) {
+                continue;
+            }
+
+            $msisdn = $number->msisdn_ported;
+            if (!is_string($msisdn) || $msisdn === '') {
+                continue;
+            }
+
+            $numbers[] = [
+                'start' => $msisdn,
+                'end' => $msisdn,
             ];
-        })->toArray();
+        }
+
+        return $numbers;
+    }
+
+    /**
+     * Requires a non-empty string value.
+     *
+     * @param  string|null $value Value to validate
+     * @param  string      $name  Field name
+     * @return string
+     */
+    private function requireString(?string $value, string $name): string
+    {
+        if ($value === null || $value === '') {
+            throw new \InvalidArgumentException("Missing required portability field: {$name}.");
+        }
+
+        return $value;
     }
 }

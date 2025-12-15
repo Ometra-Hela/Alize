@@ -37,16 +37,31 @@ class CheckConnection extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info("Checking connectivity to NUMLEX...");
 
         $endpoint = config('alize.soap.client_endpoint');
+
+        if (!is_string($endpoint) || $endpoint === '') {
+            $this->error('Invalid or missing NUMLEX endpoint configuration (alize.soap.client_endpoint).');
+
+            return self::FAILURE;
+        }
+
         $this->comment("Endpoint: $endpoint");
 
         // 1. TCP Check
         $host = parse_url($endpoint, PHP_URL_HOST);
-        $port = parse_url($endpoint, PHP_URL_PORT) ?? 443;
+        $port = parse_url($endpoint, PHP_URL_PORT);
+
+        if (!is_string($host) || $host === '') {
+            $this->error('Unable to parse host from endpoint URL.');
+
+            return self::FAILURE;
+        }
+
+        $port = is_int($port) ? $port : 443;
 
         $this->info("1. Testing TCP Connection to $host:$port...");
         if ($this->checkTcp($host, $port)) {
@@ -54,7 +69,7 @@ class CheckConnection extends Command
         } else {
             $this->error("   [FAIL] TCP Connection refused or timed out.");
 
-            return 1;
+            return self::FAILURE;
         }
 
         // 2. SSL/TLS Cert Check
@@ -62,14 +77,14 @@ class CheckConnection extends Command
         $keyPath = config('alize.soap.tls.key_path');
 
         $this->info("2. Verifying Local Certificates...");
-        if (file_exists($certPath) && file_exists($keyPath)) {
+        if (is_string($certPath) && is_string($keyPath) && file_exists($certPath) && file_exists($keyPath)) {
             $this->info("   [OK] Certificates found.");
         } else {
             $this->error("   [FAIL] Certificate files missing.");
             $this->error("   Cert: $certPath");
             $this->error("   Key:  $keyPath");
 
-            return 1;
+            return self::FAILURE;
         }
 
         // 3. SOAP Instantiation Check
@@ -81,15 +96,15 @@ class CheckConnection extends Command
         } catch (\Exception $e) {
             $this->error("   [FAIL] SOAP Init failed: " . $e->getMessage());
 
-            return 1;
+            return self::FAILURE;
         }
 
-        $this->info("Connectivity Check Passed ✅");
+        $this->info('Connectivity check passed.');
 
-        return 0;
+        return self::SUCCESS;
     }
 
-    private function checkTcp($host, $port)
+    private function checkTcp(string $host, int $port): bool
     {
         $connection = @fsockopen($host, $port, $errno, $errstr, 5);
         if (is_resource($connection)) {

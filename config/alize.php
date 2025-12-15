@@ -77,6 +77,40 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Timers Configuration
+    |--------------------------------------------------------------------------
+    |
+    | ABD specification timer durations. Values in minutes/hours.
+    |
+    */
+    'timers' => [
+        't1_timeout_minutes' => env('ALIZE_T1_TIMEOUT_MINUTES', 20),
+        't3_timeout_hours' => env('ALIZE_T3_TIMEOUT_HOURS', 24),
+        't4_timeout_hours' => env('ALIZE_T4_TIMEOUT_HOURS', 48),
+        't5_timeout_hours' => env('ALIZE_T5_TIMEOUT_HOURS', 72),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Attachment Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Security restrictions for SOAP attachments.
+    |
+    */
+    'attachments' => [
+        'max_size_mb' => env('ALIZE_ATTACHMENT_MAX_SIZE_MB', 10),
+        'max_count' => env('ALIZE_ATTACHMENT_MAX_COUNT', 10),
+        'allowed_types' => [
+            'application/pdf',
+            'image/jpeg',
+            'image/png',
+            'application/zip',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | SOAP Configuration
     |--------------------------------------------------------------------------
     |
@@ -98,6 +132,13 @@ return [
         'timeout' => 30,
         'retries' => 3,
         'retry_delay_ms' => 1000,
+
+        // Circuit breaker configuration
+        'circuit_breaker' => [
+            'failure_threshold' => env('ALIZE_CB_FAILURE_THRESHOLD', 5),
+            'open_seconds' => env('ALIZE_CB_OPEN_SECONDS', 60),
+            'half_open_successes' => env('ALIZE_CB_HALF_OPEN_SUCCESSES', 1),
+        ],
     ],
 
     /*

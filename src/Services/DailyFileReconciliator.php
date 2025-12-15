@@ -1,8 +1,25 @@
 <?php
 
+/**
+ * Daily File Reconciliator.
+ *
+ * Reconciles NUMLEX daily files with local database portability states.
+ * PHP 8.1+
+ *
+ * @package Ometra\HelaAlize\Services
+ * @author  HELA Development Team
+ * @license MIT
+ */
+
 namespace Ometra\HelaAlize\Services;
 
+use Carbon\Carbon;
+use Equidna\Toolkit\Exceptions\BadRequestException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use Ometra\HelaAlize\Enums\PortabilityState;
+use Ometra\HelaAlize\Events\PortabilityStateChanged;
 use Ometra\HelaAlize\Models\Portability;
 
 class DailyFileReconciliator
@@ -70,7 +87,8 @@ class DailyFileReconciliator
 
                         // Update state if different
                         if ($portability->state !== $newStatus->value) {
-                            $previousState = \Ometra\HelaAlize\Enums\PortabilityState::tryFrom($portability->state);
+                            $previousState = \Ometra\HelaAlize\Enums\PortabilityState::tryFrom((string) $portability->state)
+                                ?? \Ometra\HelaAlize\Enums\PortabilityState::INITIAL;
 
                             $portability->state = $newStatus->value;
 
@@ -100,9 +118,23 @@ class DailyFileReconciliator
                         // Portability not found - maybe log or ignore?
                         // Log::debug("Portability $portId not found in local DB during reconciliation.");
                     }
-                } catch (\Exception $e) {
+                } catch (QueryException $e) {
                     $stats['errors']++;
-                    Log::error("Reconciliation error for $portId: " . $e->getMessage());
+                    Log::error("Database error during reconciliation for $portId", [
+                        'error' => $e->getMessage(),
+                        'code' => $e->getCode(),
+                    ]);
+                } catch (\InvalidArgumentException $e) {
+                    $stats['errors']++;
+                    Log::warning("Invalid state transition during reconciliation for $portId", [
+                        'error' => $e->getMessage(),
+                    ]);
+                } catch (\Throwable $e) {
+                    $stats['errors']++;
+                    Log::error("Unexpected error during reconciliation for $portId", [
+                        'exception' => get_class($e),
+                        'error' => $e->getMessage(),
+                    ]);
                 }
             }
             fclose($handle);

@@ -15,6 +15,7 @@
 namespace Ometra\HelaAlize\Xml;
 
 use DOMDocument;
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\MessageType;
 use Ometra\HelaAlize\Exceptions\NumlexValidationException;
 
@@ -41,7 +42,7 @@ class XsdValidator
     public function validate(string $xml, MessageType $messageType): bool
     {
         if (!$this->isXsdAvailable()) {
-            \Log::warning('XSD schemas not available, skipping validation');
+            Log::warning('XSD schemas not available, skipping validation');
 
             return true;
         }
@@ -49,7 +50,7 @@ class XsdValidator
         $schemaFile = $this->getSchemaFile($messageType);
 
         if (!file_exists($schemaFile)) {
-            \Log::warning('XSD schema file not found', [
+            Log::warning('XSD schema file not found', [
                 'file' => $schemaFile,
                 'message_type' => $messageType->value,
             ]);

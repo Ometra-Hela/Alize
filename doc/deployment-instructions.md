@@ -1,20 +1,23 @@
 # Deployment Instructions
 
 ## System Requirements
+
 - **PHP**: ^8.1
-- **Extensions**: `soap`, `ext-openssl`, `ext-ssh2` (for SFTP)
-- **Framework**: Laravel ^10.0 or ^11.0
+- **Extensions**: `soap`, `dom`, `openssl`, `ssh2` (for SFTP)
+- **Framework**: Laravel ^10.0 | ^11.0 | ^12.0
 - **Database**: Compatible with Laravel Eloquent (MySQL/PostgreSQL recommended)
-- **Dependencies**: `equidna/laravel-toolkit` ^0.6
+- **Dependencies**: `equidna/laravel-toolkit` ^1.0.3
 
 ## Installation
 
 1. **Require via Composer**:
+
    ```bash
    composer require ometra/hela-alize
    ```
 
 2. **Publish Configuration**:
+
    ```bash
    php artisan vendor:publish --tag=alize-config
    ```
@@ -26,6 +29,7 @@
    ```
 
 ## Environment Configuration
+
 Add the following variables to your host application's `.env` file:
 
 ```dotenv
@@ -50,20 +54,31 @@ ALIZE_SFTP_HOST="sftp.portabilidad.mx"
 ALIZE_SFTP_USER="YOUR_SFTP_USER"
 ALIZE_SFTP_KEY_PATH="/path/to/sftp_private.key"
 ALIZE_SFTP_DAILY_PATH="/ftp/<IDA>/outbound/dailyfiles"
+
+# Retry & Circuit Breaker (Recommended)
+ALIZE_RETRY_DELAY_MS=1000
+ALIZE_CB_FAILURE_THRESHOLD=5
+ALIZE_CB_OPEN_SECONDS=60
+ALIZE_CB_HALF_OPEN_SUCCESSES=1
 ```
 
 ## Scheduler Configuration
+
 The package registers its own scheduled jobs in `HelaAlizeServiceProvider`:
+
 - **Timer Check**: Every minute (`CheckPortabilityTimers`)
 - **Daily Reconciliation**: Daily at 23:00 (`numlex:reconcile`)
 
 Ensure the host application's scheduler is running:
+
 ```bash
 * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## Verify Installation
+
 Run the connection check command to validate credentials and connectivity:
+
 ```bash
 php artisan numlex:check-connection
 ```

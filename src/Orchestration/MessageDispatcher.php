@@ -14,8 +14,10 @@
 
 namespace Ometra\HelaAlize\Orchestration;
 
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\MessageType;
 use Ometra\HelaAlize\Models\NpcMessage;
+use Ometra\HelaAlize\Orchestration\Handlers\InboundMessageHandler;
 use Ometra\HelaAlize\Orchestration\Handlers\PortRequestAckHandler;
 use Ometra\HelaAlize\Orchestration\Handlers\PortResponseHandler;
 use Ometra\HelaAlize\Orchestration\Handlers\ReadyToScheduleHandler;
@@ -34,7 +36,7 @@ class MessageDispatcher
         $handler = $this->getHandler($message->type_code);
 
         if ($handler === null) {
-            \Log::warning('No handler for message type', [
+            Log::warning('No handler for message type', [
                 'type' => $message->type_code->value,
                 'port_id' => $message->port_id,
             ]);
@@ -44,11 +46,13 @@ class MessageDispatcher
 
         try {
             $handler->handle($message);
-        } catch (\Exception $e) {
-            \Log::error('Message handler failed', [
+        } catch (\Throwable $e) {
+            Log::error('Message handler failed', [
                 'type' => $message->type_code->value,
                 'port_id' => $message->port_id,
+                'exception' => get_class($e),
                 'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
 
             throw $e;
@@ -59,9 +63,9 @@ class MessageDispatcher
      * Gets handler for message type.
      *
      * @param  MessageType $type Message type
-     * @return object|null Handler instance
+     * @return InboundMessageHandler|null Handler instance
      */
-    private function getHandler(MessageType $type): ?object
+    private function getHandler(MessageType $type): ?InboundMessageHandler
     {
         return match ($type) {
             MessageType::PORT_REQUEST_ACK => new PortRequestAckHandler(),

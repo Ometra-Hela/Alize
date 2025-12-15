@@ -14,6 +14,7 @@ namespace Ometra\HelaAlize\Orchestration;
 
 use Ometra\HelaAlize\Enums\MessageType;
 use Ometra\HelaAlize\Models\Portability;
+use Ometra\HelaAlize\Models\PortabilityNumber;
 use Ometra\HelaAlize\Soap\NumlexSoapClient;
 use Ometra\HelaAlize\Xml\Builders\PortRevReqBuilder;
 
@@ -24,7 +25,8 @@ class ReversionFlowHandler
 {
     public function __construct(
         protected NumlexSoapClient $soapClient
-    ) {}
+    ) {
+    }
 
     /**
      * Request Reversion (4001).
@@ -35,6 +37,40 @@ class ReversionFlowHandler
      */
     public function requestReversion(Portability $portability, ?string $reason = null): array
     {
+        if (!is_string($portability->port_id) || $portability->port_id === '') {
+            throw new \InvalidArgumentException('Portability port_id is missing.');
+        }
+
+        if (!is_string($portability->port_type) || $portability->port_type === '') {
+            throw new \InvalidArgumentException('Portability port_type is missing.');
+        }
+
+        if (!is_string($portability->subscriber_type) || $portability->subscriber_type === '') {
+            throw new \InvalidArgumentException('Portability subscriber_type is missing.');
+        }
+
+        if (!is_string($portability->dida) || $portability->dida === '') {
+            throw new \InvalidArgumentException('Portability dida is missing.');
+        }
+
+        if (!is_string($portability->rida) || $portability->rida === '') {
+            throw new \InvalidArgumentException('Portability rida is missing.');
+        }
+
+        $numbers = [];
+        foreach ($portability->numbers()->get() as $number) {
+            if (!$number instanceof PortabilityNumber) {
+                continue;
+            }
+
+            $msisdn = $number->msisdn_ported;
+            if (!is_string($msisdn) || $msisdn === '') {
+                continue;
+            }
+
+            $numbers[] = ['start' => $msisdn, 'end' => $msisdn];
+        }
+
         // 4001 sent by DIDA->ABD usually to reverse a port out?
         // Or RIDA->ABD?
         // "4001 | Solicitud de Reversión | DIDA→ABD"
@@ -62,9 +98,12 @@ class ReversionFlowHandler
             'rida' => $portability->rida,
             'dcr' => $portability->dcr,
             'rcr' => $portability->rcr,
-            'numbers' => $portability->numbers->map(fn($n) => ['start' => $n->start_num, 'end' => $n->end_num])->toArray(),
-            'comments' => $reason
+            'numbers' => $numbers,
         ];
+
+        if (is_string($reason) && $reason !== '') {
+            $data['comments'] = $reason;
+        }
 
         $builder = new PortRevReqBuilder();
         $xml = $builder->build($data);

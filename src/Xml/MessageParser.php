@@ -15,8 +15,10 @@
 namespace Ometra\HelaAlize\Xml;
 
 use DOMDocument;
+use DOMNode;
 use DOMXPath;
 use Ometra\HelaAlize\Enums\MessageType;
+use Ometra\HelaAlize\Exceptions\NumlexValidationException;
 
 abstract class MessageParser
 {
@@ -63,9 +65,35 @@ abstract class MessageParser
      */
     protected function getValue(string $path, ?string $default = null): ?string
     {
-        $node = $this->xpath->query($path)->item(0);
+        $nodes = $this->xpath->query($path);
+        if ($nodes === false) {
+            return $default;
+        }
 
-        return $node ? $node->nodeValue : $default;
+        $node = $nodes->item(0);
+        if (!$node instanceof DOMNode) {
+            return $default;
+        }
+
+        return $node->nodeValue ?? $default;
+    }
+
+    /**
+     * Gets a required element value by XPath.
+     *
+     * @param  string $path XPath expression
+     * @return string
+     * @throws NumlexValidationException When the value is missing or empty
+     */
+    protected function getRequiredValue(string $path): string
+    {
+        $value = $this->getValue($path);
+
+        if ($value === null || $value === '') {
+            throw new NumlexValidationException("Missing required XML value for XPath: {$path}");
+        }
+
+        return $value;
     }
 
     /**
@@ -77,10 +105,16 @@ abstract class MessageParser
     protected function getValues(string $path): array
     {
         $nodes = $this->xpath->query($path);
+        if ($nodes === false) {
+            return [];
+        }
+
         $values = [];
 
         foreach ($nodes as $node) {
-            $values[] = $node->nodeValue;
+            if ($node instanceof DOMNode && $node->nodeValue !== null) {
+                $values[] = $node->nodeValue;
+            }
         }
 
         return $values;
@@ -110,10 +144,23 @@ abstract class MessageParser
     {
         $numbers = [];
         $numberNodes = $this->xpath->query("{$basePath}/np:Numbers/np:Number");
+        if ($numberNodes === false) {
+            return [];
+        }
 
         foreach ($numberNodes as $numberNode) {
-            $start = $this->xpath->query('np:StartNum', $numberNode)->item(0)?->nodeValue;
-            $end = $this->xpath->query('np:EndNum', $numberNode)->item(0)?->nodeValue;
+            if (!$numberNode instanceof DOMNode) {
+                continue;
+            }
+
+            $startNodes = $this->xpath->query('np:StartNum', $numberNode);
+            $endNodes = $this->xpath->query('np:EndNum', $numberNode);
+
+            $startNode = $startNodes !== false ? $startNodes->item(0) : null;
+            $endNode = $endNodes !== false ? $endNodes->item(0) : null;
+
+            $start = $startNode instanceof DOMNode ? $startNode->nodeValue : null;
+            $end = $endNode instanceof DOMNode ? $endNode->nodeValue : null;
 
             if ($start && $end) {
                 $numbers[] = [

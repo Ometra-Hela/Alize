@@ -3,16 +3,6 @@
 /**
  * Timer Check Job.
  *
- * PHP 8.1+
- *
- * @package Ometra\HelaAlize\Jobs
- * @author  HELA Development Team
- * @license MIT
- */
-
-/**
- * Timer Check Job.
- *
  * Monitors portability timers and triggers actions on expiration.
  * Runs every minute to check T1, T3, T4, T5 timers.
  * PHP 8.1+
@@ -30,6 +20,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Models\Portability;
 use Ometra\HelaAlize\Orchestration\StateOrchestrator;
 
@@ -95,12 +86,12 @@ class CheckPortabilityTimers implements ShouldQueue
             try {
                 $orchestrator->handleTimerExpiration($portability, $timer);
 
-                \Log::info('Timer expired and handled', [
+                Log::info('Timer expired and handled', [
                     'port_id' => $portability->port_id,
                     'timer' => $timer,
                 ]);
             } catch (\Exception $e) {
-                \Log::error('Failed to handle timer expiration', [
+                Log::error('Failed to handle timer expiration', [
                     'port_id' => $portability->port_id,
                     'timer' => $timer,
                     'error' => $e->getMessage(),

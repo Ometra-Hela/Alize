@@ -4,7 +4,8 @@ namespace Ometra\HelaAlize\Tests\Unit\Support;
 
 use Carbon\CarbonImmutable;
 use Ometra\HelaAlize\Support\PortIdGenerator;
-use PHPUnit\Framework\TestCase;
+use Ometra\HelaAlize\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PortIdGeneratorTest extends TestCase
 {
@@ -16,7 +17,7 @@ class PortIdGeneratorTest extends TestCase
         $this->generator = new PortIdGenerator();
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_valid_port_id_with_correct_length()
     {
         $portId = $this->generator->generate('XXX');
@@ -24,7 +25,7 @@ class PortIdGeneratorTest extends TestCase
         $this->assertEquals(21, strlen($portId));
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_port_id_with_correct_format()
     {
         $portId = $this->generator->generate('ABC');
@@ -33,7 +34,7 @@ class PortIdGeneratorTest extends TestCase
         $this->assertMatchesRegularExpression('/^[A-Z0-9]{3}\d{14}\d{4}$/', $portId);
     }
 
-    /** @test */
+    #[Test]
     public function it_starts_with_provided_ida()
     {
         $portId = $this->generator->generate('XYZ');
@@ -41,7 +42,7 @@ class PortIdGeneratorTest extends TestCase
         $this->assertStringStartsWith('XYZ', $portId);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_correct_port_id()
     {
         $validPortId = 'XXX202512101234560001';
@@ -49,21 +50,21 @@ class PortIdGeneratorTest extends TestCase
         $this->assertTrue($this->generator->validate($validPortId));
     }
 
-    /** @test */
+    #[Test]
     public function it_rejects_invalid_length()
     {
         $this->assertFalse($this->generator->validate('XXX2025'));
         $this->assertFalse($this->generator->validate('XXX20251210123456000100'));
     }
 
-    /** @test */
+    #[Test]
     public function it_rejects_invalid_format()
     {
         $this->assertFalse($this->generator->validate('ABCD2025121012345601'));
         $this->assertFalse($this->generator->validate('XXX2025AB101234AB0001'));
     }
 
-    /** @test */
+    #[Test]
     public function it_extracts_ida_correctly()
     {
         $portId = 'ABC202512101234560001';
@@ -71,7 +72,7 @@ class PortIdGeneratorTest extends TestCase
         $this->assertEquals('ABC', $this->generator->extractIda($portId));
     }
 
-    /** @test */
+    #[Test]
     public function it_extracts_timestamp_correctly()
     {
         $portId = 'XXX202512101234560001';
@@ -82,7 +83,7 @@ class PortIdGeneratorTest extends TestCase
         $this->assertEquals('2025-12-10 12:34:56', $timestamp->format('Y-m-d H:i:s'));
     }
 
-    /** @test */
+    #[Test]
     public function it_extracts_sequence_correctly()
     {
         $portId = 'XXX202512101234560123';
@@ -90,7 +91,7 @@ class PortIdGeneratorTest extends TestCase
         $this->assertEquals(123, $this->generator->extractSequence($portId));
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_with_custom_datetime()
     {
         $datetime = CarbonImmutable::parse('2025-12-31 23:59:59');

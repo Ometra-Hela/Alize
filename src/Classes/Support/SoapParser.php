@@ -15,6 +15,7 @@
 namespace Ometra\HelaAlize\Classes\Support;
 
 use DOMDocument;
+use DOMNode;
 use DOMXPath;
 use stdClass;
 
@@ -99,15 +100,25 @@ class SoapParser
      */
     private function extractTextValue(
         DOMXPath $xpath,
-        string $query
+        string $query,
+        ?DOMNode $contextNode = null
     ): ?string {
-        $nodes = $xpath->query($query);
+        $nodes = $xpath->query($query, $contextNode);
+
+        if ($nodes === false) {
+            return null;
+        }
 
         if ($nodes->length === 0) {
             return null;
         }
 
-        return trim($nodes->item(0)->textContent);
+        $node = $nodes->item(0);
+        if ($node === null || !$node instanceof DOMNode) {
+            return null;
+        }
+
+        return trim($node->textContent);
     }
 
     /**
@@ -122,31 +133,42 @@ class SoapParser
      */
     private function extractAttachments(DOMXPath $xpath): array
     {
+        /** @var array<int, array{name: string, mime: string, size_bytes: int, content: string}> $attachments */
         $attachments = [];
 
         // Look for attachment nodes in SOAP message
         $attachmentNodes = $xpath->query('//np:attachment');
+        if ($attachmentNodes === false) {
+            return $attachments;
+        }
 
         foreach ($attachmentNodes as $node) {
+            if (!$node instanceof DOMNode) {
+                continue;
+            }
             $attachment = [];
 
             $attachment['name'] = $this->extractTextValue(
                 xpath: $xpath,
-                query: './np:filename'
+                query: './np:filename',
+                contextNode: $node
             ) ?? 'unknown';
 
             $attachment['mime'] = $this->extractTextValue(
                 xpath: $xpath,
-                query: './np:mimeType'
+                query: './np:mimeType',
+                contextNode: $node
             ) ?? 'application/octet-stream';
 
             $contentBase64 = $this->extractTextValue(
                 xpath: $xpath,
-                query: './np:content'
+                query: './np:content',
+                contextNode: $node
             ) ?? '';
 
             $attachment['content'] = $contentBase64;
-            $attachment['size_bytes'] = strlen(base64_decode($contentBase64));
+            $decoded = base64_decode($contentBase64, true);
+            $attachment['size_bytes'] = $decoded === false ? 0 : strlen($decoded);
 
             $attachments[] = $attachment;
         }

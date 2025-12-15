@@ -3,8 +3,7 @@
 /**
  * Mexican business calendar with working window management.
  *
- * Handles business day calculations and working hours enforcement (11:00-17:00 MX)
- * using Business-Day mixin and Mexican holidays from Yasumi.
+ * Handles business day calculations and working hours enforcement (11:00-17:00 MX).
  * PHP 8.1+
  *
  * @package Ometra\HelaAlize\\Classes\Calendar
@@ -26,7 +25,19 @@ class BusinessCalendarMX
      */
     public function isBusinessDay(CarbonImmutable $date): bool
     {
-        return $date->isBusinessDay();
+        $date = $date->setTimezone(config('alize.timezone'));
+
+        if ($date->isWeekend()) {
+            return false;
+        }
+
+        /** @var array<int, string> $holidays */
+        $holidays = (array) config('alize.holidays', []);
+        if ($holidays === []) {
+            return true;
+        }
+
+        return !in_array($date->toDateString(), $holidays, true);
     }
 
     /**
@@ -40,7 +51,23 @@ class BusinessCalendarMX
         CarbonImmutable $date,
         int $days
     ): CarbonImmutable {
-        return $date->addBusinessDays($days);
+        if ($days === 0) {
+            return $date;
+        }
+
+        $direction = $days > 0 ? 1 : -1;
+        $remaining = abs($days);
+        $current = $date;
+
+        while ($remaining > 0) {
+            $current = $direction > 0 ? $current->addDay() : $current->subDay();
+
+            if ($this->isBusinessDay($current)) {
+                $remaining--;
+            }
+        }
+
+        return $current;
     }
 
     /**

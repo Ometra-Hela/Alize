@@ -18,8 +18,10 @@ use Illuminate\Support\ServiceProvider;
 
 class HelaAlizeServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
+        $this->validateConfiguration();
+
         $this->loadRoutesFrom(__DIR__ . '/../routes/alize.php');
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -51,7 +53,7 @@ class HelaAlizeServiceProvider extends ServiceProvider
         });
     }
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/alize.php',
@@ -69,5 +71,61 @@ class HelaAlizeServiceProvider extends ServiceProvider
                 new \Ometra\HelaAlize\Orchestration\StateOrchestrator()
             );
         });
+    }
+
+    /**
+     * Validates required configuration and fails fast on invalid values.
+     */
+    private function validateConfiguration(): void
+    {
+        $config = (array) config('alize.soap', []);
+
+        $userId = (string) ($config['user_id'] ?? '');
+        $passwordB64 = (string) ($config['password_b64'] ?? '');
+        $endpoint = (string) ($config['client_endpoint'] ?? '');
+
+        if ($userId === '' || $passwordB64 === '') {
+            throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
+                'Missing NUMLEX credentials (alize.soap.user_id/password_b64)'
+            );
+        }
+
+        if ($endpoint === '') {
+            throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
+                'Missing NUMLEX endpoint (alize.soap.client_endpoint)'
+            );
+        }
+
+        /** @var array<string, string> $tls */
+        $tls = (array) ($config['tls'] ?? []);
+        $certPath = (string) ($tls['cert_path'] ?? '');
+        $keyPath = (string) ($tls['key_path'] ?? '');
+        $caPath = (string) ($tls['ca_path'] ?? '');
+
+        if ($certPath === '' || $keyPath === '' || $caPath === '') {
+            throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
+                'Missing TLS certificate paths (alize.soap.tls.cert_path/key_path/ca_path)'
+            );
+        }
+
+        foreach ([$certPath, $keyPath, $caPath] as $path) {
+            if (!file_exists($path)) {
+                throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
+                    'TLS file not found: ' . $path
+                );
+            }
+        }
+
+        /** @var array<string, int> $cb */
+        $cb = (array) ($config['circuit_breaker'] ?? []);
+        $failureThreshold = (int) ($cb['failure_threshold'] ?? 0);
+        $openSeconds = (int) ($cb['open_seconds'] ?? 0);
+        $halfOpenSuccesses = (int) ($cb['half_open_successes'] ?? 0);
+
+        if ($failureThreshold < 1 || $openSeconds < 1 || $halfOpenSuccesses < 1) {
+            throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
+                'Invalid circuit breaker configuration (thresholds must be >= 1)'
+            );
+        }
     }
 }

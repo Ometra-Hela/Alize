@@ -14,12 +14,13 @@
 
 namespace Ometra\HelaAlize\Orchestration\Handlers;
 
+use Illuminate\Support\Facades\Log;
 use Ometra\HelaAlize\Enums\PortabilityState;
 use Ometra\HelaAlize\Models\NpcMessage;
 use Ometra\HelaAlize\Models\Portability;
 use Ometra\HelaAlize\Orchestration\StateOrchestrator;
 
-class PortRequestAckHandler
+class PortRequestAckHandler implements InboundMessageHandler
 {
     /**
      * Handles port request acknowledgment.
@@ -29,10 +30,18 @@ class PortRequestAckHandler
      */
     public function handle(NpcMessage $message): void
     {
+        if (!is_string($message->raw_xml) || $message->raw_xml === '') {
+            Log::error('Inbound message XML is missing for ACK handler', [
+                'port_id' => $message->port_id,
+            ]);
+
+            return;
+        }
+
         $portability = Portability::where('port_id', $message->port_id)->first();
 
         if (!$portability) {
-            \Log::error('Portability not found for ACK', [
+            Log::error('Portability not found for ACK', [
                 'port_id' => $message->port_id,
             ]);
 
@@ -56,7 +65,7 @@ class PortRequestAckHandler
                 'ABD acknowledged request',
             );
 
-            \Log::info('Port request acknowledged', [
+            Log::info('Port request acknowledged', [
                 'port_id' => $portability->port_id,
             ]);
         } else {
@@ -68,7 +77,7 @@ class PortRequestAckHandler
                 "ABD rejected: {$data['error_code']} - {$data['error_message']}",
             );
 
-            \Log::warning('Port request rejected by ABD', [
+            Log::warning('Port request rejected by ABD', [
                 'port_id' => $portability->port_id,
                 'error_code' => $data['error_code'],
                 'error_message' => $data['error_message'],

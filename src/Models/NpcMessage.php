@@ -3,16 +3,6 @@
 /**
  * NPC Message model.
  *
- * PHP 8.1+
- *
- * @package Ometra\HelaAlize\Models
- * @author  HELA Development Team
- * @license MIT
- */
-
-/**
- * NPC Message model.
- *
  * Represents NUMLEX messages sent and received through SOAP interface.
  * Stores raw XML, parsed data, and tracking information for idempotency.
  * PHP 8.1+
@@ -29,6 +19,34 @@ use Illuminate\Database\Eloquent\Model;
 use Ometra\HelaAlize\Enums\MessageDirection;
 use Ometra\HelaAlize\Enums\MessageType;
 
+/**
+ * NPC Message Model.
+ *
+ * @property int $id
+ * @property string|null $port_id
+ * @property string|null $message_id
+ * @property MessageDirection $direction
+ * @property MessageType $type_code
+ * @property string|null $sender
+ * @property string|null $raw_xml
+ * @property array|null $parsed_data
+ * @property \Carbon\Carbon|null $sent_at
+ * @property \Carbon\Carbon|null $received_at
+ * @property string|null $ack_status
+ * @property string|null $ack_text
+ * @property int $retry_count
+ * @property string|null $idempotency_key
+ * @property \Carbon\Carbon|null $last_retry_at
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder where(string $column, mixed $value)
+ * @method static static|null first()
+ * @method static static create(array $attributes)
+ * @method bool save(array $options = [])
+ * @method bool update(array $attributes = [], array $options = [])
+ * @method int increment(string $column, float|int $amount = 1, array $extra = [])
+ */
 class NpcMessage extends Model
 {
     public function __construct(array $attributes = [])

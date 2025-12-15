@@ -29,9 +29,12 @@ class ReconcileDailyFiles extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): int
     {
-        $date = $this->argument('date') ?? now()->subDay()->format('Ymd');
+        $dateArgument = $this->argument('date');
+        $date = is_string($dateArgument) && $dateArgument !== ''
+            ? $dateArgument
+            : now()->subDay()->format('Ymd');
 
         $this->info("Starting reconciliation for date: $date");
 
@@ -41,7 +44,7 @@ class ReconcileDailyFiles extends Command
             if (empty($files)) {
                 $this->warn("No files found for date $date");
 
-                return;
+                return self::SUCCESS;
             }
 
             foreach ($files as $file) {
@@ -61,6 +64,10 @@ class ReconcileDailyFiles extends Command
             $this->info("Reconciliation complete.");
         } catch (\Exception $e) {
             $this->error("Reconciliation failed: " . $e->getMessage());
+
+            return self::FAILURE;
         }
+
+        return self::SUCCESS;
     }
 }
