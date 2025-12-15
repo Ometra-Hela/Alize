@@ -1,0 +1,1759 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Carbon\\CarbonImmutable\:\:addBusinessDays\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Classes/Calendar/BusinessCalendarMX.php
+
+		-
+			message: '#^Call to an undefined method Carbon\\CarbonImmutable\:\:isBusinessDay\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Classes/Calendar/BusinessCalendarMX.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Classes/Calendar/BusinessCalendarMX.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Events\\InboundMessageReceived\:\:dispatch\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\NpcMessage\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Call to method getContent\(\) on an unknown class Illuminate\\Http\\Request\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Call to method validate\(\) on an unknown class Ometra\\HelaAlize\\Classes\\Support\\AttachmentGuard\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Function response not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Instantiated class Ometra\\HelaAlize\\Classes\\Support\\AttachmentGuard not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Classes\\Soap\\ProcessNpcMsgAction\:\:execute\(\) has invalid return type Illuminate\\Http\\Response\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Parameter \$request of method Ometra\\HelaAlize\\Classes\\Soap\\ProcessNpcMsgAction\:\:execute\(\) has invalid type Illuminate\\Http\\Request\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Classes/Soap/ProcessNpcMsgAction.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Classes/Support/SoapAuthGuard.php
+
+		-
+			message: '#^Instantiated class Ometra\\HelaAlize\\Classes\\Exceptions\\InvalidSoapCredentialsException not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Classes/Support/SoapAuthGuard.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Ometra\\HelaAlize\\Classes\\Exceptions\\InvalidSoapCredentialsException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: src/Classes/Support/SoapAuthGuard.php
+
+		-
+			message: '#^Throwing object of an unknown class Ometra\\HelaAlize\\Classes\\Exceptions\\InvalidSoapCredentialsException\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Classes/Support/SoapAuthGuard.php
+
+		-
+			message: '#^Argument of an invalid type DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Classes/Support/SoapParser.php
+
+		-
+			message: '#^Cannot access property \$length on DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/Classes/Support/SoapParser.php
+
+		-
+			message: '#^Cannot access property \$textContent on DOMNameSpaceNode\|DOMNode\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/Classes/Support/SoapParser.php
+
+		-
+			message: '#^Cannot call method item\(\) on DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Classes/Support/SoapParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Classes\\Support\\SoapParser\:\:extractAttachments\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Classes/Support/SoapParser.php
+
+		-
+			message: '#^Call to an undefined static method Carbon\\Carbon\:\:setHolidays\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Classes/bootstrap.php
+
+		-
+			message: '#^Call to an undefined static method Carbon\\Carbon\:\:setHolidaysRegion\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: src/Classes/bootstrap.php
+
+		-
+			message: '#^Call to static method create\(\) on an unknown class Yasumi\\Yasumi\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Classes/bootstrap.php
+
+		-
+			message: '#^Call to static method enable\(\) on an unknown class Cmixin\\BusinessDay\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Classes/bootstrap.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\CheckConnection\:\:comment\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\CheckConnection\:\:error\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\CheckConnection\:\:info\(\)\.$#'
+			identifier: method.notFound
+			count: 8
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\CheckConnection\:\:checkTcp\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\CheckConnection\:\:checkTcp\(\) has parameter \$host with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\CheckConnection\:\:checkTcp\(\) has parameter \$port with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Console/Commands/CheckConnection.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:argument\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:error\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:info\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:table\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:warn\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:handle\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:__construct\(\) calls parent\:\:__construct\(\) but Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:\$description has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Console\\Commands\\ReconcileDailyFiles\:\:\$signature has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Undefined variable\: \$reconciliator$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Undefined variable\: \$sftp$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Console/Commands/ReconcileDailyFiles.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:alert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:ask\(\)\.$#'
+			identifier: method.notFound
+			count: 8
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:call\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:choice\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:error\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:info\(\)\.$#'
+			identifier: method.notFound
+			count: 9
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:line\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Facades\\HelaAlize\:\:requestNip\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Facades\\HelaAlize\:\:requestReversion\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to method getContent\(\) on an unknown class Illuminate\\Http\\Response\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to method getStatusCode\(\) on an unknown class Illuminate\\Http\\Response\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Call to static method create\(\) on an unknown class Illuminate\\Http\\Request\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:testCancellation\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:testInbound\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:testNip\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Console\\Commands\\TestFullFlowPortability\:\:testReversion\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Console/Commands/TestFullFlowPortability.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$folio_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$req_port_exec_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:alert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:ask\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:confirm\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:error\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:info\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:line\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Console\\Commands\\TestInitiatePortability\:\:table\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Console/Commands/TestInitiatePortability.php
+
+		-
+			message: '#^Comparison operation "\>\=" between 1001\|1002\|1003\|1004\|1005\|1006\|1007\|1091\|1092\|1093\|1201\|1202\|1203\|2001\|2002\|2004\|2005\|3001\|3002\|4001\|4002\|4003\|4004\|4005\|5001\|5002\|6001\|6002\|7001\|7002\|8101\|8102\|8201\|8202 and 1001 is always true\.$#'
+			identifier: greaterOrEqual.alwaysTrue
+			count: 1
+			path: src/Enums/MessageType.php
+
+		-
+			message: '#^Class Ometra\\HelaAlize\\Facades\\HelaAlize has PHPDoc tag @method for method initiate\(\) parameter \#1 \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/HelaAlize.php
+
+		-
+			message: '#^Call to method command\(\) on an unknown class Illuminate\\Console\\Scheduling\\Schedule\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Call to method job\(\) on an unknown class Illuminate\\Console\\Scheduling\\Schedule\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Class Illuminate\\Console\\Scheduling\\Schedule not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Class Ometra\\HelaAlize\\Services\\HelaAlizeService constructor invoked with 3 parameters, 5 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Function config_path not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\HelaAlizeServiceProvider\:\:boot\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Parameter \#3 \$nipHandler of class Ometra\\HelaAlize\\Services\\HelaAlizeService constructor expects Ometra\\HelaAlize\\Orchestration\\NipFlowHandler, Ometra\\HelaAlize\\Orchestration\\StateOrchestrator given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/HelaAlizeServiceProvider.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Http\\Controllers\\SoapController\:\:handle\(\) has invalid return type Illuminate\\Http\\Response\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Http/Controllers/SoapController.php
+
+		-
+			message: '#^Parameter \$request of method Ometra\\HelaAlize\\Http\\Controllers\\SoapController\:\:handle\(\) has invalid type Illuminate\\Http\\Request\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Http/Controllers/SoapController.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:whereNotNull\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: src/Jobs/CheckPortabilityTimers.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Jobs/CheckPortabilityTimers.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Jobs/CheckPortabilityTimers.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Jobs/CheckPortabilityTimers.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Jobs\\CheckPortabilityTimers\:\:checkTimer\(\) has parameter \$portabilities with generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Jobs/CheckPortabilityTimers.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$ack_status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$table\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\NpcMessage\:\:belongsTo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\NpcMessage\:\:increment\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\NpcMessage\:\:update\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Call to method where\(\) on an unknown class Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\NpcMessage\:\:__construct\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\NpcMessage\:\:portability\(\) has invalid return type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\NpcMessage\:\:scopeInbound\(\) has invalid return type Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\NpcMessage\:\:scopeOutbound\(\) has invalid return type Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\NpcMessage\:\:scopePendingRetry\(\) has invalid return type Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Ometra\\HelaAlize\\Models\\NpcMessage\:\:__construct\(\) calls parent\:\:__construct\(\) but Ometra\\HelaAlize\\Models\\NpcMessage does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Parameter \$query of method Ometra\\HelaAlize\\Models\\NpcMessage\:\:scopeInbound\(\) has invalid type Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Parameter \$query of method Ometra\\HelaAlize\\Models\\NpcMessage\:\:scopeOutbound\(\) has invalid type Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Parameter \$query of method Ometra\\HelaAlize\\Models\\NpcMessage\:\:scopePendingRetry\(\) has invalid type Illuminate\\Database\\Eloquent\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$casts has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$fillable has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/NpcMessage.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$table\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Models/Portability.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\Portability\:\:hasMany\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Models/Portability.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Models/Portability.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\Portability\:\:numbers\(\) has invalid return type Illuminate\\Database\\Eloquent\\Relations\\HasMany\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Models/Portability.php
+
+		-
+			message: '#^Ometra\\HelaAlize\\Models\\Portability\:\:__construct\(\) calls parent\:\:__construct\(\) but Ometra\\HelaAlize\\Models\\Portability does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: src/Models/Portability.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\PortabilityAttachment\:\:\$table\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Models/PortabilityAttachment.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\PortabilityAttachment\:\:belongsTo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Models/PortabilityAttachment.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Models/PortabilityAttachment.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\PortabilityAttachment\:\:portability\(\) has invalid return type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Models/PortabilityAttachment.php
+
+		-
+			message: '#^Ometra\\HelaAlize\\Models\\PortabilityAttachment\:\:__construct\(\) calls parent\:\:__construct\(\) but Ometra\\HelaAlize\\Models\\PortabilityAttachment does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: src/Models/PortabilityAttachment.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\PortabilityLog\:\:belongsTo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\PortabilityLog\:\:portability\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityLog\:\:\$guarded has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityLog\:\:\$incrementing has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityLog\:\:\$primaryKey has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityLog\:\:\$table has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityLog\:\:\$timestamps has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityLog.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:belongsTo\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:portability\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:service\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:\$guarded has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:\$incrementing has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:\$primaryKey has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:\$table has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityMsisdn\:\:\$timestamps has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityMsisdn.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:\$table\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:belongsTo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:__construct\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:portability\(\) has invalid return type Illuminate\\Database\\Eloquent\\Relations\\BelongsTo\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:__construct\(\) calls parent\:\:__construct\(\) but Ometra\\HelaAlize\\Models\\PortabilityNumber does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:\$fillable has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:\$timestamps has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Models/PortabilityNumber.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$dcr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$dida\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$msisdn\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$rcr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$rida\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$subscriber_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$t4_expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Orchestration\\CancellationFlowHandler\:\:getPortabilityNumbers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Orchestration\\CancellationFlowHandler\:\:\$orchestrator is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Orchestration/CancellationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$parsed_data\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$raw_xml\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\NpcMessage\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortRequestAckHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$parsed_data\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$raw_xml\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\NpcMessage\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Offset ''status'' does not exist on array\{header\: array, port_id\: string, timestamp\: string, authorization\: string, reason_code\: string\|null, reason_text\: string\|null, numbers\: array, rejected_numbers\: array\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Orchestration/Handlers/PortResponseHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/Handlers/ReadyToScheduleHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Events\\PortabilityReadyToSchedule\:\:dispatch\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ReadyToScheduleHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ReadyToScheduleHandler.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ReadyToScheduleHandler.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ReadyToScheduleHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$raw_xml\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Events\\PortabilityScheduled\:\:dispatch\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Orchestration\\Handlers\\ScheduleNotificationHandler\:\:parseExecutionDate\(\) should return Carbon\\CarbonImmutable but returns Carbon\\CarbonImmutable\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Orchestration/Handlers/ScheduleNotificationHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/MessageDispatcher.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\NpcMessage\:\:\$type_code\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Orchestration/MessageDispatcher.php
+
+		-
+			message: '#^Call to an undefined method object\:\:handle\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Orchestration/MessageDispatcher.php
+
+		-
+			message: '#^Call to static method error\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/MessageDispatcher.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/MessageDispatcher.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Orchestration/NipFlowHandler.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Orchestration/NipFlowHandler.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Orchestration\\NipFlowHandler\:\:requestNip\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Orchestration/NipFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$dcr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$dida\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$numbers\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_exec_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$rcr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$req_port_exec_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$rida\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$subscriber_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\Portability\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\PortabilityNumber\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 4
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Offset ''recovery_flag'' on array\{port_type\: string, subscriber_type\: string, recovery_flag\: string, dida\: string, dcr\: string, rcr\: string, numbers\: array\<array\{start\: string, end\: string\}\>, pin\?\: string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Ometra\\HelaAlize\\Xml\\Builders\\PortRequestBuilder\:\:build\(\) expects array\{sender\: string, port_id\: string, folio_id\: string, port_type\: string, subscriber_type\: string, recovery_flag\: string, dida\: string, dcr\: string, \.\.\.\}, array\{sender\: mixed, port_id\: string, folio_id\: string, port_type\: string, subscriber_type\: string, recovery_flag\: string, dida\: string, dcr\: string, \.\.\.\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Orchestration\\PortationFlowHandler\:\:\$orchestrator is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Orchestration/PortationFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$dcr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$dida\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$numbers\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$rcr\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$rida\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$subscriber_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Orchestration\\ReversionFlowHandler\:\:requestReversion\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Orchestration/ReversionFlowHandler.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_exec_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$port_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$t1_expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$t3_expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Access to an undefined property Ometra\\HelaAlize\\Models\\Portability\:\:\$t4_expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Call to an undefined method Ometra\\HelaAlize\\Models\\Portability\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Events\\PortabilityStateChanged\:\:dispatch\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Call to static method info\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Orchestration/StateOrchestrator.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Events\\PortabilityStateChanged\:\:dispatch\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Services/DailyFileReconciliator.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Services/DailyFileReconciliator.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Services\\DailyFileReconciliator\:\:reconcile\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Services/DailyFileReconciliator.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\Portability\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: src/Services/HelaAlizeService.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Services\\HelaAlizeService\:\:initiate\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Services/HelaAlizeService.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Services\\HelaAlizeService\:\:requestNip\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Services/HelaAlizeService.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Services\\HelaAlizeService\:\:requestReversion\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Services/HelaAlizeService.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Ometra\\HelaAlize\\Orchestration\\PortationFlowHandler\:\:initiatePortation\(\) expects array\{port_type\: string, subscriber_type\: string, recovery_flag\: string, dida\: string, dcr\: string, rcr\: string, numbers\: array\<array\{start\: string, end\: string\}\>, pin\?\: string, \.\.\.\}, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Services/HelaAlizeService.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 4
+			path: src/Services/SftpClient.php
+
+		-
+			message: '#^Function storage_path not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Services/SftpClient.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Services\\SftpClient\:\:downloadDailyFiles\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Services/SftpClient.php
+
+		-
+			message: '#^Property Ometra\\HelaAlize\\Services\\SftpClient\:\:\$disk has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Services/SftpClient.php
+
+		-
+			message: '#^Call to an undefined static method Ometra\\HelaAlize\\Models\\NpcMessage\:\:create\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: src/Soap/NumlexSoapClient.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Soap/NumlexSoapClient.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Soap/NumlexSoapClient.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Soap\\NumlexSoapClient\:\:processNPCMsg\(\) should return array\{success\: bool, response\: string, error\: string\|null\} but returns array\{success\: false, response\: null, error\: string\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Soap/NumlexSoapClient.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Soap\\NumlexSoapClient\:\:sendWithRetry\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Soap/NumlexSoapClient.php
+
+		-
+			message: '#^Variable \$result might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Soap/NumlexSoapClient.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Support/FolioIdGenerator.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Support\\FolioIdGenerator\:\:extractTimestamp\(\) should return Carbon\\CarbonImmutable but returns Carbon\\CarbonImmutable\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Support/FolioIdGenerator.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Support/PortIdGenerator.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Support\\PortIdGenerator\:\:extractTimestamp\(\) should return Carbon\\CarbonImmutable but returns Carbon\\CarbonImmutable\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Support/PortIdGenerator.php
+
+		-
+			message: '#^Offset ''CANCELLED''\|''DELETED''\|''INITIAL''\|''PIN_DELIVERY_CONF''\|''PIN_REQUESTED''\|''PORT_INDVAL…''\|''PORT_REQUESTED''\|''PORT_SCHEDULED''\|''PORTED''\|''READY_TO_BE…''\|''REJECT_PENDING''\|''REJECTED''\|''REVERSAL_DOCS…''\|''REVERSAL_REQUESTED''\|''REVERSAL_SCHEDULED''\|''REVERSED''\|''TERMINATED'' on array\{INITIAL\: array\{''PIN_REQUESTED'', ''PORT_REQUESTED''\}, PIN_REQUESTED\: array\{''PIN_DELIVERY_CONF'', ''REJECTED'', ''TERMINATED''\}, PIN_DELIVERY_CONF\: array\{''PORT_REQUESTED'', ''TERMINATED''\}, PORT_REQUESTED\: array\{''PORT_INDVAL…'', ''READY_TO_BE…'', ''REJECT_PENDING'', ''CANCELLED'', ''REJECTED'', ''TERMINATED''\}, PORT_INDVAL_REQUESTED\: array\{''READY_TO_BE…'', ''CANCELLED'', ''REJECTED'', ''TERMINATED''\}, READY_TO_BE_SCHEDULED\: array\{''PORT_SCHEDULED'', ''CANCELLED'', ''TERMINATED''\}, REJECT_PENDING\: array\{''REJECTED'', ''TERMINATED''\}, PORT_SCHEDULED\: array\{''PORTED'', ''CANCELLED'', ''REVERSAL_REQUESTED''\}, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 2
+			path: src/Support/StateTransition.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Xml/Builders/CancellationRequestBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\IndPortValRespBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/IndPortValRespBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\IndividualPortValidationBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/IndividualPortValidationBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\PinGenerationRequestBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/PinGenerationRequestBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\PortCancelRespBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/PortCancelRespBuilder.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Xml/Builders/PortRequestBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\PortRevAcceptBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/PortRevAcceptBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\PortRevRejectBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/PortRevRejectBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Builders\\PortRevReqBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Builders/PortRevReqBuilder.php
+
+		-
+			message: '#^Function now not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Xml/Builders/SchedulePortBuilder.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Xml/MessageBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageBuilder\:\:build\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/MessageBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageBuilder\:\:createNumbersSection\(\) has parameter \$numbers with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/MessageBuilder.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageBuilder\:\:toXml\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Xml/MessageBuilder.php
+
+		-
+			message: '#^Argument of an invalid type DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 2
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Cannot call method item\(\) on DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageParser\:\:getValues\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageParser\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageParser\:\:parseHeader\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\MessageParser\:\:parseNumbers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Parameter \#2 \$contextNode of method DOMXPath\:\:query\(\) expects DOMNode\|null, DOMNameSpaceNode\|DOMNode given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Xml/MessageParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\PortRequestAckParser\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Parsers/PortRequestAckParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\PortRequestAckParser\:\:parse\(\) should return array\{header\: array, port_id\: string, timestamp\: string, ack_status\: string, error_code\: string\|null, error_message\: string\|null\} but returns array\{header\: array, port_id\: string\|null, timestamp\: string\|null, ack_status\: string, error_code\: string\|null, error_message\: string\|null\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Xml/Parsers/PortRequestAckParser.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between non\-falsy\-string and ''0'' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Xml/Parsers/PortRequestAckParser.php
+
+		-
+			message: '#^Argument of an invalid type DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Xml/Parsers/PortResponseParser.php
+
+		-
+			message: '#^Cannot call method item\(\) on DOMNodeList\<DOMNameSpaceNode\|DOMNode\>\|false\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Xml/Parsers/PortResponseParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\PortResponseParser\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 3
+			path: src/Xml/Parsers/PortResponseParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\PortResponseParser\:\:parse\(\) should return array\{header\: array, port_id\: string, timestamp\: string, authorization\: string, reason_code\: string\|null, reason_text\: string\|null, numbers\: array, rejected_numbers\: array\} but returns array\{header\: array, port_id\: string\|null, timestamp\: string\|null, authorization\: string\|null, reason_code\: string\|null, reason_text\: string\|null, numbers\: array, rejected_numbers\: array, \.\.\.\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Xml/Parsers/PortResponseParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\PortResponseParser\:\:parseRejectedNumbers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Parsers/PortResponseParser.php
+
+		-
+			message: '#^Parameter \#2 \$contextNode of method DOMXPath\:\:query\(\) expects DOMNode\|null, DOMNameSpaceNode\|DOMNode given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Xml/Parsers/PortResponseParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\ReadyToScheduleParser\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Xml/Parsers/ReadyToScheduleParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\ReadyToScheduleParser\:\:parse\(\) should return array\{header\: array, port_id\: string, timestamp\: string, numbers\: array\} but returns array\{header\: array, port_id\: string\|null, timestamp\: string\|null, port_type\: string\|null, numbers\: array\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Xml/Parsers/ReadyToScheduleParser.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Xml/Parsers/ScheduleNotificationParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\ScheduleNotificationParser\:\:getExecutionDate\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Xml/Parsers/ScheduleNotificationParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\ScheduleNotificationParser\:\:parse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 2
+			path: src/Xml/Parsers/ScheduleNotificationParser.php
+
+		-
+			message: '#^Method Ometra\\HelaAlize\\Xml\\Parsers\\ScheduleNotificationParser\:\:parse\(\) should return array\{header\: array, port_id\: string, timestamp\: string, port_exec_date\: string, req_port_exec_date\: string, numbers\: array\} but returns array\{header\: array, port_id\: string\|null, timestamp\: string\|null, port_exec_date\: string\|null, req_port_exec_date\: string\|null, port_type\: string\|null, numbers\: array\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Xml/Parsers/ScheduleNotificationParser.php
+
+		-
+			message: '#^Call to static method warning\(\) on an unknown class Log\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Xml/XsdValidator.php
+
+		-
+			message: '#^Function config not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Xml/XsdValidator.php
