@@ -36,5 +36,5 @@ If using asynchronous processing (recommended):
 Recommended alerts for the host application:
 
 - **High Error Rate** on `SoapController`: Indicates issues receiving callbacks from NUMLEX.
-- **Certificate Expiry**: Monitor the `ALIZE_TLS_CERT_PATH` file expiration date.
+- **Certificate Expiry (if configured)**: Monitor the `ALIZE_TLS_CERT_PATH` file expiration date.
 - **SFTP Sync Failure**: Zero "Processed" files in daily reconciliation for > 24 hours.

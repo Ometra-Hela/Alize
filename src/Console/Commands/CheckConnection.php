@@ -75,14 +75,21 @@ class CheckConnection extends Command
         // 2. SSL/TLS Cert Check
         $certPath = config('alize.soap.tls.cert_path');
         $keyPath = config('alize.soap.tls.key_path');
+        $caPath = config('alize.soap.tls.ca_path');
 
         $this->info("2. Verifying Local Certificates...");
-        if (is_string($certPath) && is_string($keyPath) && file_exists($certPath) && file_exists($keyPath)) {
+        $hasTlsConfig = is_string($certPath) && is_string($keyPath) && is_string($caPath)
+            && ($certPath !== '' || $keyPath !== '' || $caPath !== '');
+
+        if (! $hasTlsConfig) {
+            $this->comment("   [SKIP] TLS certificates not configured; skipping local file check.");
+        } elseif (file_exists((string) $certPath) && file_exists((string) $keyPath) && file_exists((string) $caPath)) {
             $this->info("   [OK] Certificates found.");
         } else {
             $this->error("   [FAIL] Certificate files missing.");
             $this->error("   Cert: $certPath");
             $this->error("   Key:  $keyPath");
+            $this->error("   CA:   $caPath");
 
             return self::FAILURE;
         }

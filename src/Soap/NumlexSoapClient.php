@@ -46,7 +46,7 @@ class NumlexSoapClient
             throw new IntegrationException('Invalid SOAP configuration (alize.soap).');
         }
 
-        $tls = $config['tls'] ?? null;
+        $tls = $config['tls'] ?? [];
         if (!is_array($tls)) {
             throw new IntegrationException('Invalid SOAP TLS configuration (alize.soap.tls).');
         }
@@ -70,18 +70,42 @@ class NumlexSoapClient
             halfOpenMaxSuccesses: (int) ($cb['half_open_successes'] ?? 1),
         );
 
-        $this->client = $this->makeSoapClient([
+        $certPath = (string) ($tls['cert_path'] ?? '');
+        $keyPath = (string) ($tls['key_path'] ?? '');
+        $caPath = (string) ($tls['ca_path'] ?? '');
+        $tlsConfigured = $certPath !== '' || $keyPath !== '' || $caPath !== '';
+
+        if ($tlsConfigured && ($certPath === '' || $keyPath === '' || $caPath === '')) {
+            throw new IntegrationException(
+                'Incomplete TLS configuration: provide cert_path, key_path, and ca_path or leave all empty.'
+            );
+        }
+
+        if ($tlsConfigured) {
+            foreach ([$certPath, $keyPath, $caPath] as $path) {
+                if (!file_exists($path)) {
+                    throw new IntegrationException('TLS file not found: ' . $path);
+                }
+            }
+        }
+
+        $soapOptions = [
             'location' => $endpoint,
             'uri' => 'urn:npc:mx:np',
             'trace' => true,
             'exceptions' => true,
             'connection_timeout' => (int) ($config['timeout'] ?? 30),
-            'local_cert' => (string) ($tls['cert_path'] ?? ''),
-            'local_pk' => (string) ($tls['key_path'] ?? ''),
-            'cafile' => (string) ($tls['ca_path'] ?? ''),
             'verify_peer' => true,
             'verify_peer_name' => true,
-        ]);
+        ];
+
+        if ($tlsConfigured) {
+            $soapOptions['local_cert'] = $certPath;
+            $soapOptions['local_pk'] = $keyPath;
+            $soapOptions['cafile'] = $caPath;
+        }
+
+        $this->client = $this->makeSoapClient($soapOptions);
     }
 
     /**

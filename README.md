@@ -24,7 +24,7 @@ Primary audience: internal dev teams and external integrators embedding this pac
 1. Install: `composer require ometra/hela-alize`
 2. Publish config: `php artisan vendor:publish --tag=alize-config`
 3. Run migrations: `php artisan migrate`
-4. Configure environment: TLS certs, NUMLEX credentials, SOAP endpoint, SFTP settings (see Deployment Instructions)
+4. Configure environment: NUMLEX credentials, SOAP endpoint, optional TLS certs, SFTP settings (see Deployment Instructions)
 5. Ensure scheduler and a queue worker are running
 6. Verify: `php artisan numlex:check-connection` and hit the SOAP route to test inbound
 

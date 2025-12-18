@@ -102,17 +102,20 @@ class HelaAlizeServiceProvider extends ServiceProvider
         $keyPath = (string) ($tls['key_path'] ?? '');
         $caPath = (string) ($tls['ca_path'] ?? '');
 
-        if ($certPath === '' || $keyPath === '' || $caPath === '') {
-            throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
-                'Missing TLS certificate paths (alize.soap.tls.cert_path/key_path/ca_path)'
-            );
-        }
-
-        foreach ([$certPath, $keyPath, $caPath] as $path) {
-            if (!file_exists($path)) {
+        $tlsConfigured = $certPath !== '' || $keyPath !== '' || $caPath !== '';
+        if ($tlsConfigured) {
+            if ($certPath === '' || $keyPath === '' || $caPath === '') {
                 throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
-                    'TLS file not found: ' . $path
+                    'Incomplete TLS configuration: provide cert_path, key_path, and ca_path or leave all empty.'
                 );
+            }
+
+            foreach ([$certPath, $keyPath, $caPath] as $path) {
+                if (!file_exists($path)) {
+                    throw new \Ometra\HelaAlize\Exceptions\InvalidConfigurationException(
+                        'TLS file not found: ' . $path
+                    );
+                }
             }
         }
 

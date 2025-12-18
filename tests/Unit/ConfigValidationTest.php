@@ -29,4 +29,42 @@ class ConfigValidationTest extends TestCase
         // Directly invoke boot which performs configuration validation
         $provider->boot();
     }
+
+    #[Test]
+    public function itAllowsBootWithoutTlsCertificates()
+    {
+        config(['alize.soap.user_id' => 'user']);
+        config(['alize.soap.password_b64' => 'pass']);
+        config(['alize.soap.client_endpoint' => 'https://example.com']);
+        config(['alize.soap.tls.cert_path' => '']);
+        config(['alize.soap.tls.key_path' => '']);
+        config(['alize.soap.tls.ca_path' => '']);
+        config(['alize.soap.circuit_breaker.failure_threshold' => 1]);
+        config(['alize.soap.circuit_breaker.open_seconds' => 1]);
+        config(['alize.soap.circuit_breaker.half_open_successes' => 1]);
+
+        $provider = new HelaAlizeServiceProvider($this->app);
+
+        $provider->boot();
+        $this->addToAssertionCount(1);
+    }
+
+    #[Test]
+    public function itFailsWhenTlsConfigurationIsPartial()
+    {
+        config(['alize.soap.user_id' => 'user']);
+        config(['alize.soap.password_b64' => 'pass']);
+        config(['alize.soap.client_endpoint' => 'https://example.com']);
+        config(['alize.soap.tls.cert_path' => __FILE__]);
+        config(['alize.soap.tls.key_path' => '']);
+        config(['alize.soap.tls.ca_path' => '']);
+        config(['alize.soap.circuit_breaker.failure_threshold' => 1]);
+        config(['alize.soap.circuit_breaker.open_seconds' => 1]);
+        config(['alize.soap.circuit_breaker.half_open_successes' => 1]);
+
+        $provider = new HelaAlizeServiceProvider($this->app);
+
+        $this->expectException(InvalidConfigurationException::class);
+        $provider->boot();
+    }
 }

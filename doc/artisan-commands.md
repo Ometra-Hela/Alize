@@ -10,7 +10,7 @@ The package provides several console commands for diagnostics, maintenance, and 
 Diagnostics tool to verify connectivity to NUMLEX.
 
 - **Signature**: `numlex:check-connection`
-- **Purpose**: Checks TCP connectivity, SSL certificates, and SOAP client initialization.
+- **Purpose**: Checks TCP connectivity, optional SSL certificates, and SOAP client initialization.
 - **Usage**:
   ```bash
   php artisan numlex:check-connection

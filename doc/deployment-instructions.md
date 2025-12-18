@@ -44,10 +44,11 @@ ALIZE_NUMLEX_USER_ID="YOUR_USER_ID"
 ALIZE_NUMLEX_PASSWORD="YOUR_PASSWORD_BASE64"
 ALIZE_NUMLEX_ENDPOINT="https://soap.portabilidad.mx/api/np/processmsg"
 
-# TLS Certificates (Required for NUMLEX connection)
-ALIZE_TLS_CERT_PATH="/path/to/certificate.pem"
-ALIZE_TLS_KEY_PATH="/path/to/private.key"
-ALIZE_TLS_CA_PATH="/path/to/ca_bundle.pem"
+# TLS Certificates (Optional - for mutual TLS/custom CA)
+# Leave blank to use system trust store
+ALIZE_TLS_CERT_PATH=""
+ALIZE_TLS_KEY_PATH=""
+ALIZE_TLS_CA_PATH=""
 
 # SFTP Configuration (For Daily Files)
 ALIZE_SFTP_HOST="sftp.portabilidad.mx"
